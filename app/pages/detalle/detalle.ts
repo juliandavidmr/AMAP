@@ -7,7 +7,7 @@ import { Geolocation } from 'ionic-native';
 })
 export class DetallePage {
 
-  private posicion;
+  public posicion;
   private subscription;
   private punto: any;
   distancia: number = 0;
@@ -25,7 +25,6 @@ export class DetallePage {
 
       this.distancia = this.calcPosition(this.punto);
     });
-
   }
 
   ngOnDestroy() {

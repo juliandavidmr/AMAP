@@ -13,6 +13,9 @@ import {FIREBASE_PROVIDERS,
 import { LoginPage } from './pages/login/login';
 import { DashboardPage } from './pages/dashboard/dashboard';
 import { SedesPage } from './pages/sedes/sedes';
+import { MapaPage } from "./pages/mapa/mapa";
+import { ConnectivityService } from './providers/connectivity-service/connectivity-service';
+
 
 @Component({
   templateUrl: 'build/app.html'
@@ -36,7 +39,8 @@ class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Dashboard', component: DashboardPage },
-      { title: 'Sedes', component: SedesPage }
+      { title: 'Sedes', component: SedesPage },
+      { title: 'Mapa', component: MapaPage }
     ];
   }
 
@@ -61,6 +65,6 @@ ionicBootstrap(MyApp, [FIREBASE_PROVIDERS,
     authDomain: "amap-945a3.firebaseapp.com",
     databaseURL: "https://amap-945a3.firebaseio.com",
     storageBucket: "amap-945a3.appspot.com",
-  })], {
+  }), ConnectivityService], {
     mode: 'ios'
   });
