@@ -2,8 +2,17 @@ import { Component, ViewChild } from '@angular/core';
 import { ionicBootstrap, Platform, Nav } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
+import {FIREBASE_PROVIDERS,
+  defaultFirebase,
+  AngularFire,
+  AuthMethods,
+  AuthProviders,
+  firebaseAuthConfig} from 'angularfire2';
+
 import { Page1 } from './pages/page1/page1';
 import { Page2 } from './pages/page2/page2';
+import { LoginPage } from './pages/login/login';
+import { DashboardPage } from './pages/dashboard/dashboard';
 
 @Component({
   templateUrl: 'build/app.html'
@@ -11,16 +20,16 @@ import { Page2 } from './pages/page2/page2';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Page1;
+  rootPage: any = DashboardPage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
 
   constructor(public platform: Platform) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Page uno', component: Page1 },
+      { title: 'Dashboard', component: DashboardPage },
       { title: 'Page dos', component: Page2 }
     ];
 
@@ -41,6 +50,12 @@ class MyApp {
   }
 }
 
-ionicBootstrap(MyApp, null, {
-  mode: 'ios'
-});
+ionicBootstrap(MyApp, [FIREBASE_PROVIDERS,
+  defaultFirebase({
+    apiKey: "AIzaSyCOi2TytLkoP4m0KAcygF8R1LgOL3LTG98",
+    authDomain: "amap-945a3.firebaseapp.com",
+    databaseURL: "https://amap-945a3.firebaseio.com",
+    storageBucket: "amap-945a3.appspot.com",
+  })], {
+    mode: 'ios'
+  });

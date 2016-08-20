@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>login</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <form>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="email" name="email" [(ngModel)]="user.email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" name="password" [(ngModel)]="user.password"></ion-input>
+    </ion-item>
+
+    <div padding>
+      <button block (click)="login(l)">Login</button>
+      <button block (click)="registerUser()">Create New Account</button>
+    </div>
+  </form>
+</ion-content>

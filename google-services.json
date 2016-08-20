@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "184126787238",
+    "firebase_url": "https://amap-945a3.firebaseio.com",
+    "project_id": "amap-945a3",
+    "storage_bucket": "amap-945a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184126787238:android:f9059b039cbcc4a4",
+        "android_client_info": {
+          "package_name": "com.ionicframework.amap325219"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184126787238-9dr5kmkoa9u1amavskmssb2mr0gc326q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQwx5c1Sih7CIIM7S5LlEApI7VR87objE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
