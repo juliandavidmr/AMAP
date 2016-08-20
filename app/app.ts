@@ -7,12 +7,12 @@ import {FIREBASE_PROVIDERS,
   AngularFire,
   AuthMethods,
   AuthProviders,
+  FirebaseAuth,
   firebaseAuthConfig} from 'angularfire2';
 
-import { Page1 } from './pages/page1/page1';
-import { Page2 } from './pages/page2/page2';
 import { LoginPage } from './pages/login/login';
 import { DashboardPage } from './pages/dashboard/dashboard';
+import { SedesPage } from './pages/sedes/sedes';
 
 @Component({
   templateUrl: 'build/app.html'
@@ -20,19 +20,24 @@ import { DashboardPage } from './pages/dashboard/dashboard';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = DashboardPage;
+  rootPage: any = LoginPage;
 
   pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform) {
+  constructor(public platform: Platform, public auth: FirebaseAuth) {
+    this.auth.subscribe((data) => {
+      if (data) {
+        this.rootPage = DashboardPage;
+      }
+    });
+
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Dashboard', component: DashboardPage },
-      { title: 'Page dos', component: Page2 }
+      { title: 'Sedes', component: SedesPage }
     ];
-
   }
 
   initializeApp() {

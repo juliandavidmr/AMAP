@@ -1,0 +1,25 @@
+<ion-header class="opaque">
+
+  <ion-navbar no-border-bottom class="opaque">
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>Sedes</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngFor="let item of ListSedes | async">
+
+    <ion-card-header>
+      {{item.nombresede}}
+    </ion-card-header>
+
+    <ion-card-content>
+      Distancia actual {{calcPosition(item.posicion) | number: '.3-3'}} Km
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>

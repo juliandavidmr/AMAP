@@ -12,7 +12,13 @@ export class LoginPage {
   public user: any = { email: '', password: '' };
   loader: any;
 
-  constructor(public navCtrl: NavController, public auth: FirebaseAuth, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  constructor(
+    public navCtrl: NavController,
+    public auth: FirebaseAuth, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  }
+
+
+  ngOnInit() {
   }
 
   public registerUser() {

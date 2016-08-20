@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 
 @Component({
@@ -8,14 +8,29 @@ import { Geolocation } from 'ionic-native';
 export class DetallePage {
 
   private posicion;
+  private subscription;
+  private punto: any;
+  distancia: number = 0;
+  detalle: string = "Detalle";
 
-  constructor(private navCtrl: NavController) {
+  constructor(private navCtrl: NavController, private _navParams: NavParams) {
 
-    let watch = Geolocation.watchPosition().subscribe(pos => {
+    this.punto = this._navParams.data.posicion;
+    console.log(this._navParams.data);
+    this.detalle = this._navParams.data;
+
+    this.subscription = Geolocation.watchPosition().subscribe(pos => {
       console.log('lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
       this.posicion = pos.coords;
+
+      this.distancia = this.calcPosition(this.punto);
     });
 
+  }
+
+  ngOnDestroy() {
+    console.log("Destruido");
+    this.subscription.unsubscribe();
   }
 
   calcPosition(punto = { x: "", y: "" }) {
