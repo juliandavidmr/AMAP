@@ -20,7 +20,7 @@ class MyApp {
 
   rootPage: any = DashboardPage;
 
-  pages: Array<{ title: string, component: any }>;
+  pages: Array<{ title: string, component: any, icon: string }>;
 
   constructor(public platform: Platform, public auth: FirebaseAuth) {
     this.auth.subscribe((data) => {
@@ -33,9 +33,9 @@ class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Dashboard', component: DashboardPage },
-      { title: 'Sedes', component: SedesPage },
-      { title: 'Mapa', component: MapaPage }
+      { title: 'Dashboard', component: DashboardPage, icon: 'ionic' },
+      { title: 'Sedes', component: SedesPage, icon: 'list-box' },
+      { title: 'Mapa', component: MapaPage, icon: 'pin' }
     ];
   }
 

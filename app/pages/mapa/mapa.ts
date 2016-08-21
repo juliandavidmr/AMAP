@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 import { ConnectivityService } from '../../providers/connectivity-service/connectivity-service';
 import { Geolocation } from 'ionic-native';
 
@@ -14,8 +14,10 @@ export class MapaPage {
   map: any;
   mapInitialised: boolean = false;
   apiKey: any;
+  loader: any;
 
-  constructor(private nav: NavController, private connectivityService: ConnectivityService) {
+  constructor(private nav: NavController, private connectivityService: ConnectivityService, private loadingCtrl: LoadingController) {
+    this.showLoading('Cargando mapa...');
     this.loadGoogleMaps();
   }
 
@@ -23,7 +25,7 @@ export class MapaPage {
 
     this.addConnectivityListeners();
 
-    if (typeof google == "undefined" || typeof google.maps == "undefined") {
+    if (typeof google === "undefined" || typeof google.maps === "undefined") {
 
       console.log("Google maps JavaScript needs to be loaded.");
       this.disableMap();
@@ -49,17 +51,16 @@ export class MapaPage {
         document.body.appendChild(script);
 
       }
-    }
-    else {
+    } else {
 
       if (this.connectivityService.isOnline()) {
         console.log("showing map");
         this.initMap();
         this.enableMap();
-      }
-      else {
+      } else {
         console.log("disabling map");
         this.disableMap();
+        this.loader.dismiss();
       }
 
     }
@@ -92,11 +93,10 @@ export class MapaPage {
 
   enableMap() {
     console.log("enable map");
+    this.loader.dismiss();
   }
 
   addConnectivityListeners() {
-    var me = this;
-
     var onOnline = () => {
       setTimeout(() => {
         if (typeof google == "undefined" || typeof google.maps == "undefined") {
@@ -120,4 +120,11 @@ export class MapaPage {
 
   }
 
+  showLoading(msg) {
+    this.loader = this.loadingCtrl.create({
+      content: msg
+    });
+
+    this.loader.present();
+  }
 }

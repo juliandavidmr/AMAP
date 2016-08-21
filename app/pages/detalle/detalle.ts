@@ -14,7 +14,7 @@ export class DetallePage {
   direccion: any;
   altitud: any;
   velocidad: any;
-  detalle: string = "Detalle";
+  detalle: string = 'Detalle';
   loader: any;
 
   constructor(
@@ -23,7 +23,7 @@ export class DetallePage {
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController
   ) {
-    this.showLoading('Calculando mi posición...');
+    this.showLoading('Calculando telemetría...');
 
     this.punto = this._navParams.data.posicion;
     console.log(this._navParams.data);
@@ -31,7 +31,7 @@ export class DetallePage {
 
     Geolocation.getCurrentPosition().then(pos => {
       this.subscription = Geolocation.watchPosition().subscribe(pos => {
-        console.log('=>', pos);
+        // console.log('=>', pos);
 
         console.log('lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
         this.posicion = pos.coords;
@@ -68,7 +68,7 @@ export class DetallePage {
     this.loader.present();
   }
 
-  calcPosition(punto = { x: "", y: "" }) {
+  calcPosition(punto = { x: '', y: '' }) {
     let lat = punto.x;
     let lng = punto.y;
 

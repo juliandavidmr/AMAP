@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
-import { FirebaseAuth, AngularFire, FirebaseListObservable } from 'angularfire2';
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { FirebaseAuth, AngularFire } from 'angularfire2';
+import { ConnectivityService } from '../../providers/connectivity-service/connectivity-service';
 
 import { DetallePage } from '../detalle/detalle';
 
@@ -17,8 +18,15 @@ export class DashboardPage {
     public af: AngularFire,
     public auth: FirebaseAuth,
     public navCtrl: NavController,
-    private loadingCtrl: LoadingController) {
+    private loadingCtrl: LoadingController,
+    private connectivityService: ConnectivityService,
+    private alertCtrl: AlertController
+  ) {
+    if (this.connectivityService.isOnline()) {
       this.showLoading();
+    } else {
+      this.presentAlert('Ups!', 'Al parecer tienes conexión a Internet.');
+    }
   }
 
   onPageDidEnter() {
@@ -50,6 +58,16 @@ export class DashboardPage {
   openDetalle(params) {
     this.navCtrl.push(DetallePage, params);
   }
+
+  presentAlert(title: string, description: string) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: description,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
 
   /**
    * [initializeItems inicializar los array que son usados para mostrar como listado]
@@ -86,7 +104,7 @@ export class DashboardPage {
           return true;
         }
       } else if (v.descripcion) {
-        if (v.descripcion.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+        if ((v.descripcion + '').toLowerCase().indexOf(q.toLowerCase()) > -1) {
           return true;
         }
       }
