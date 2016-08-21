@@ -7,17 +7,16 @@
 </ion-header>
 
 <ion-content padding>
-
-  <div class="loading-page">
-    <div class="counter">
+  <center>
+    <div>
       <p>Distancia actual</p>
       <h1>{{distancia | number: '.3-3'}}
-        mts
-      </h1>
+      metros
+    </h1>
       <h5>{{(distancia / 1000) | number: '.3-3'}}
-        Km</h5>
+      Km</h5>
     </div>
-  </div>
+  </center>
 
   <ion-list>
     <ion-list-header>
@@ -29,9 +28,11 @@
     <ion-item>Tipo {{detalle.tiporecurso}}</ion-item>
 
     <ion-list-header>
-      Mis coordenadas
+      Telemetría
     </ion-list-header>
     <ion-item *ngIf="posicion">Latitud {{posicion.latitude}}</ion-item>
     <ion-item *ngIf="posicion">Longitud {{posicion.longitude}}</ion-item>
+    <ion-item *ngIf="velocidad">Velocidad {{velocidad}}</ion-item>
+    <ion-item *ngIf="altitud">Altitud {{altitud}}</ion-item>
   </ion-list>
 </ion-content>

@@ -34,14 +34,13 @@ export class SedesPage {
   }
 
   ngOnDestroy() {
-    console.log("Destruido");
+    console.log('Subscription Droped');
     this.subscription.unsubscribe();
   }
 
   onPageDidEnter() {
     this.auth.subscribe((data) => {
       if (data) {
-
         //console.log(data);
       }
       this.loader.dismiss();
@@ -52,7 +51,7 @@ export class SedesPage {
 
   showLoading() {
     this.loader = this.loadingCtrl.create({
-      content: "Por favor espere..."
+      content: 'Por favor espere...'
     });
 
     this.loader.present();
@@ -62,7 +61,7 @@ export class SedesPage {
 
   }
 
-  calcPosition(punto = { x: "", y: "" }) {
+  calcPosition(punto = { x: '', y: '' }) {
     if (this.posicion) {
 
       let lat = punto.y;
@@ -82,44 +81,17 @@ export class SedesPage {
     var dLon = (lon2 - lon1) * (Math.PI / 180);
     var a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2)
-      ;
+      Math.cos(lat1 * (Math.PI / 180)) *
+      Math.cos(lat2 * (Math.PI / 180)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c;
     return d;
   }
 
-
   openDetalle(params) {
     this.navCtrl.push(DetallePage, params);
-  }
-
-  iconify(tiporecurso) {
-    switch (tiporecurso) {
-      case "Recreacion":
-        return "baseball";
-      case "Laboratorio":
-        return "beaker";
-      case "Cafeteria":
-        return "cafe";
-      case "Sala":
-        return "home";
-      case "Parqueadero":
-        return "car";
-      case "Camara":
-        return "camera";
-      case "Papeleria":
-        return "paper";
-      case "Biblioteca":
-        return "book";
-      case "Auditorio":
-        return "mic";
-      case "Entradas":
-        return "arrow-round-down";
-      default:
-        return "wine";
-    }
   }
 
 }

@@ -9,8 +9,8 @@ import { DetallePage } from '../detalle/detalle';
 })
 export class DashboardPage {
 
-  ListRecursosFisicos: any;
-  ListRecursosFisicos_aux: FirebaseListObservable<any>;
+  ListRecursosFisicos: any = [];
+  ListRecursosFisicos_aux: any = [];
   loader: any;
 
   constructor(
@@ -29,6 +29,7 @@ export class DashboardPage {
       }
     }).subscribe(list => {
       this.ListRecursosFisicos = list;
+      this.ListRecursosFisicos_aux = list;
       // console.log(this.ListRecursosFisicos);
       this.loader.dismiss();
     });
@@ -50,30 +51,74 @@ export class DashboardPage {
     this.navCtrl.push(DetallePage, params);
   }
 
+  /**
+   * [initializeItems inicializar los array que son usados para mostrar como listado]
+   * @return {[type]} [description]
+   */
+  initializeItems() {
+    this.ListRecursosFisicos = this.ListRecursosFisicos_aux; //Esto es para evitar que los datos originales se eliminen en la busqueda del metodo 'getItems'
+  }
+
+  /**
+   * [getItems buscar items segun un Nombre, descripcion y Telefono]
+   * @param  {[type]} searchbar [description]
+   * @return {[type]}           [description]
+   */
+  getItems(searchbar) {
+    // Reset items back to all of the items
+    this.initializeItems();
+
+    // set q to the value of the searchbar
+    var q = searchbar.srcElement.value;
+
+    // if the value is an empty string don't filter the items
+    if (q.trim() === '') {
+      return;
+    }
+
+    this.ListRecursosFisicos = this.ListRecursosFisicos.filter((v) => {
+      if (v.nombrerecurso) {
+        if (v.nombrerecurso.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+          return true;
+        }
+      } else if (v.numbloque) {
+        if ((v.numbloque + '').toLowerCase().indexOf(q.toLowerCase()) > -1) {
+          return true;
+        }
+      } else if (v.descripcion) {
+        if (v.descripcion.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+          return true;
+        }
+      }
+
+      return false;
+    });
+  }
+
   iconify(tiporecurso) {
     switch (tiporecurso) {
-      case "Recreacion":
-        return "baseball";
-      case "Laboratorio":
-        return "beaker";
-      case "Cafeteria":
-        return "cafe";
-      case "Sala":
-        return "home";
-      case "Parqueadero":
-        return "car";
-      case "Camara":
-        return "camera";
-      case "Papeleria":
-        return "paper";
-      case "Biblioteca":
-        return "book";
-      case "Auditorio":
-        return "mic";
-      case "Entradas":
-        return "arrow-round-down";
+      case 'Recreacion':
+        return 'baseball';
+      case 'Laboratorio':
+        return 'beaker';
+      case 'Cafeteria':
+        return 'cafe';
+      case 'Sala':
+        return 'home';
+      case 'Parqueadero':
+        return 'car';
+      case 'Camara':
+        return 'camera';
+      case 'Papeleria':
+        return 'paper';
+      case 'Biblioteca':
+        return 'book';
+      case 'Auditorio':
+        return 'mic';
+      case 'Entradas':
+        return 'arrow-round-down';
       default:
-        return "wine";
+        return 'wine';
     }
   }
 

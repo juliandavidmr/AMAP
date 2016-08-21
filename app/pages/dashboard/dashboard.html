@@ -1,26 +1,30 @@
 <ion-header class="opaque">
 
-  <ion-navbar colorselect no-border-bottom>
+  <ion-navbar primary no-border-bottom>
     <button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
 
     <ion-title>Dashboard</ion-title>
   </ion-navbar>
-<!--
+
   <ion-toolbar no-border-top no-border-bottom primary>
     <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="getItems($event)" placeholder="Buscar por nombre, descripción..."></ion-searchbar>
   </ion-toolbar>
--->
 </ion-header>
 
 <ion-content padding>
   <ion-list>
+    <ion-item *ngIf="ListRecursosFisicos.length === 0">
+      <ion-icon name="alert" item-left large royal></ion-icon>
+      <h2>Sin resultados</h2>
+    </ion-item>
+
     <ion-item-sliding  *ngFor="let item of ListRecursosFisicos">
       <ion-item (click)="openDetalle(item)">
         <ion-icon [name]="iconify(item.tiporecurso)" item-left large royal></ion-icon>
         <h2>{{item.nombrerecurso}}</h2>
-        <h3>Bloque {{item.numbloque}}</h3>
+        <h3 *ngIf="item.numbloque != 0" >Bloque {{item.numbloque}}</h3>
         <p>{{item.descripcion}}</p>
       </ion-item>
 
