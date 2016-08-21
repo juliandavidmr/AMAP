@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 
 @Component({
@@ -12,24 +12,53 @@ export class DetallePage {
   private punto: any;
   distancia: number = 0;
   detalle: string = "Detalle";
+  loader: any;
 
-  constructor(private navCtrl: NavController, private _navParams: NavParams) {
+  constructor(
+    private navCtrl: NavController,
+    private _navParams: NavParams,
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController
+  ) {
+    this.showLoading('Calculando mi posición...');
 
     this.punto = this._navParams.data.posicion;
     console.log(this._navParams.data);
     this.detalle = this._navParams.data;
 
-    this.subscription = Geolocation.watchPosition().subscribe(pos => {
-      console.log('lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
-      this.posicion = pos.coords;
+    Geolocation.getCurrentPosition().then(pos => {
+      this.subscription = Geolocation.watchPosition().subscribe(pos => {
+        console.log('lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
+        this.posicion = pos.coords;
 
-      this.distancia = this.calcPosition(this.punto);
+        this.distancia = this.calcPosition(this.punto);
+        this.loader.dismiss();
+      });
+    }).catch((error) => {
+      this.loader.dismiss();
+      console.log("ERROR", error);
+      this.presentAlert();
     });
   }
 
+
   ngOnDestroy() {
     console.log("Destruido");
-    this.subscription.unsubscribe();
+
+    try {
+      this.subscription.unsubscribe();
+    } catch (error) {
+      console.log("Error al unsubscribirse: ", error);
+    }
+  }
+
+
+  showLoading(msg) {
+    this.loader = this.loadingCtrl.create({
+      content: msg
+    });
+
+    this.loader.present();
   }
 
   calcPosition(punto = { x: "", y: "" }) {
@@ -55,5 +84,13 @@ export class DetallePage {
     return d;
   }
 
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'GPS Desactivado',
+      subTitle: 'Ups! al parecer tienes el GPS inhabilitado. Activalo e intenta de nuevo.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
 
 }

@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
-import { FirebaseAuth, AuthProviders, AuthMethods, FirebaseRef, AngularFire, FirebaseListObservable } from 'angularfire2';
+import { FirebaseAuth, AngularFire, FirebaseListObservable } from 'angularfire2';
 
-import { DetallePage } from "../detalle/detalle";
+import { DetallePage } from '../detalle/detalle';
 
 @Component({
   templateUrl: 'build/pages/dashboard/dashboard.html',
 })
 export class DashboardPage {
 
-  ListRecursosFisicos: FirebaseListObservable<any>;
+  ListRecursosFisicos: any;
   ListRecursosFisicos_aux: FirebaseListObservable<any>;
   loader: any;
 
@@ -22,21 +22,21 @@ export class DashboardPage {
   }
 
   onPageDidEnter() {
-
-    this.auth.subscribe((data) => {
-      if (data) {
-
-        //console.log(data);
+    this.af.database.list('/recursosfisicos', {
+      query: {
+        limitToLast: 100,
+        orderByKey: true
       }
+    }).subscribe(list => {
+      this.ListRecursosFisicos = list;
+      // console.log(this.ListRecursosFisicos);
       this.loader.dismiss();
-      this.ListRecursosFisicos = this.af.database.list('/recursosfisicos');
-      console.log(this.ListRecursosFisicos);
     });
   }
 
   showLoading() {
     this.loader = this.loadingCtrl.create({
-      content: "Por favor espere..."
+      content: 'Actualizando base de datos...'
     });
 
     this.loader.present();

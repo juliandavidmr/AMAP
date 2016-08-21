@@ -4,18 +4,13 @@ import { StatusBar } from 'ionic-native';
 
 import {FIREBASE_PROVIDERS,
   defaultFirebase,
-  AngularFire,
-  AuthMethods,
-  AuthProviders,
-  FirebaseAuth,
-  firebaseAuthConfig} from 'angularfire2';
+  FirebaseAuth} from 'angularfire2';
 
 import { LoginPage } from './pages/login/login';
 import { DashboardPage } from './pages/dashboard/dashboard';
 import { SedesPage } from './pages/sedes/sedes';
-import { MapaPage } from "./pages/mapa/mapa";
+import { MapaPage } from './pages/mapa/mapa';
 import { ConnectivityService } from './providers/connectivity-service/connectivity-service';
-
 
 @Component({
   templateUrl: 'build/app.html'
@@ -23,7 +18,7 @@ import { ConnectivityService } from './providers/connectivity-service/connectivi
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any = DashboardPage;
 
   pages: Array<{ title: string, component: any }>;
 

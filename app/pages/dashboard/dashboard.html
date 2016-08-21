@@ -16,7 +16,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item-sliding  *ngFor="let item of ListRecursosFisicos | async">
+    <ion-item-sliding  *ngFor="let item of ListRecursosFisicos">
       <ion-item (click)="openDetalle(item)">
         <ion-icon [name]="iconify(item.tiporecurso)" item-left large royal></ion-icon>
         <h2>{{item.nombrerecurso}}</h2>
