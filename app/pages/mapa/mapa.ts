@@ -33,7 +33,7 @@ export class MapaPage {
       if (this.connectivityService.isOnline()) {
         console.log("online, loading map");
 
-        //Load the SDK
+        // Load the SDK
         window['mapInit'] = () => {
           this.initMap();
           this.enableMap();

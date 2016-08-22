@@ -1,0 +1,39 @@
+<ion-header class="opaque">
+
+  <ion-navbar primary no-border-bottom>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>Foro Chat</ion-title>
+
+    <ion-buttons end>
+      <button>
+        <ion-icon name="search"></ion-icon>
+      </button>
+      <button *ngIf="autenticado" (click)="addMessage()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let item of messages | async">
+      <ion-avatar item-left>
+        <div class="container" *ngIf="item.user">
+          <div class="inner-circle">
+            <div class="icon-letter">
+              {{item.user.substring(0, 2).toUpperCase()}}
+            </div>
+          </div>
+        </div>
+      </ion-avatar>
+
+      <h2>{{item.content}}</h2>
+      <p>{{item.date}}</p>
+      <p *ngIf="item.user">{{item.user}}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

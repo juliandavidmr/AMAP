@@ -14,7 +14,9 @@ export class LoginPage {
 
   constructor(
     public navCtrl: NavController,
-    public auth: FirebaseAuth, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+    public auth: FirebaseAuth,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController) {
   }
 
 
@@ -51,7 +53,7 @@ export class LoginPage {
       this.navCtrl.setRoot(DashboardPage);
     }).catch((error) => {
       this.showError(error);
-    })
+    });
   }
 
   showLoading() {

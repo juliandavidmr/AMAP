@@ -7,6 +7,7 @@ import {FIREBASE_PROVIDERS,
   FirebaseAuth} from 'angularfire2';
 
 import { LoginPage } from './pages/login/login';
+import { ChatPage } from './pages/chat/chat';
 import { DashboardPage } from './pages/dashboard/dashboard';
 import { SedesPage } from './pages/sedes/sedes';
 import { MapaPage } from './pages/mapa/mapa';
@@ -35,7 +36,8 @@ class MyApp {
     this.pages = [
       { title: 'Dashboard', component: DashboardPage, icon: 'ionic' },
       { title: 'Sedes', component: SedesPage, icon: 'list-box' },
-      { title: 'Mapa', component: MapaPage, icon: 'pin' }
+      { title: 'Mapa', component: MapaPage, icon: 'pin' },
+      { title: 'Chat', component: ChatPage, icon: 'ios-chatbubbles-outline' }
     ];
   }
 

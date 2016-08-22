@@ -24,24 +24,23 @@ export class DashboardPage {
   ) {
     if (this.connectivityService.isOnline()) {
       this.showLoading();
+
+      this.af.database.list('/recursosfisicos', {
+        query: {
+          limitToLast: 100,
+          orderByKey: true
+        }
+      }).subscribe(list => {
+        this.ListRecursosFisicos = list;
+        this.ListRecursosFisicos_aux = list;
+        // console.log(this.ListRecursosFisicos);
+        this.loader.dismiss();
+      });
     } else {
       this.presentAlert('Ups!', 'Al parecer tienes conexión a Internet.');
     }
   }
 
-  onPageDidEnter() {
-    this.af.database.list('/recursosfisicos', {
-      query: {
-        limitToLast: 100,
-        orderByKey: true
-      }
-    }).subscribe(list => {
-      this.ListRecursosFisicos = list;
-      this.ListRecursosFisicos_aux = list;
-      // console.log(this.ListRecursosFisicos);
-      this.loader.dismiss();
-    });
-  }
 
   showLoading() {
     this.loader = this.loadingCtrl.create({
