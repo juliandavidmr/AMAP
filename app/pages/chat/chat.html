@@ -11,7 +11,7 @@
       <button>
         <ion-icon name="search"></ion-icon>
       </button>
-      <button *ngIf="autenticado" (click)="addMessage()">
+      <button (click)="addMessage()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
@@ -20,7 +20,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let item of messages | async">
+    <ion-item *ngFor="let item of messages | async" (click)="presentActionSheet(item)">
       <ion-avatar item-left>
         <div class="container" *ngIf="item.user">
           <div class="inner-circle">
@@ -34,6 +34,9 @@
       <h2>{{item.content}}</h2>
       <p>{{item.date}}</p>
       <p *ngIf="item.user">{{item.user}}</p>
+
+      <ion-badge item-right primary *ngIf="item.megusta">{{item.megusta}}</ion-badge>
+      <ion-badge item-right danger *ngIf="item.inadecuado">{{item.inadecuado}}</ion-badge>
     </ion-item>
   </ion-list>
 </ion-content>

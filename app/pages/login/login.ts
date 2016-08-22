@@ -19,10 +19,6 @@ export class LoginPage {
     private loadingCtrl: LoadingController) {
   }
 
-
-  ngOnInit() {
-  }
-
   public registerUser() {
     this.showLoading();
 

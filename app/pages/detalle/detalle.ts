@@ -23,7 +23,7 @@ export class DetallePage {
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController
   ) {
-    this.showLoading('Calculando telemetría...');
+    this.showLoading('Calculando telemetría... \nNota: Debes tener activado el GPS para ésta funcionalidad.');
 
     this.punto = this._navParams.data.posicion;
     console.log(this._navParams.data);
