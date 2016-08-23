@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, ActionSheetController, LoadingController } from 'ionic-angular';
+import { NavController, AlertController, ActionSheetController, LoadingController, ToastController } from 'ionic-angular';
 import { FirebaseAuth, AngularFire, FirebaseListObservable } from 'angularfire2';
 
 import { LoginPage } from '../login/login';
@@ -20,8 +20,12 @@ export class ChatPage {
     public auth: FirebaseAuth,
     private actionSheetController: ActionSheetController,
     private loadingCtrl: LoadingController,
+    private toastController: ToastController,
     public af: AngularFire) {
 
+  }
+
+  onPageDidEnter() {
     this.messages = this.af.database.list('/chat');
     console.log(this.messages);
 
@@ -127,7 +131,8 @@ export class ChatPage {
           text: 'Ver todo',
           handler: () => {
             console.log('Archive clicked');
-            this.presentAlert('Mensaje', item.content);
+            this.presentToast(item.content, 5000);
+            // this.presentAlert('Mensaje', item.content);
           }
         }, {
           text: 'Cancelar',
@@ -157,6 +162,14 @@ export class ChatPage {
     });
 
     this.loader.present();
+  }
+
+  presentToast(msg: string, time: number) {
+    let toast = this.toastController.create({
+      message: msg,
+      duration: time
+    });
+    toast.present();
   }
 
 }

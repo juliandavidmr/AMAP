@@ -5,13 +5,14 @@ import { StatusBar } from 'ionic-native';
 import {FIREBASE_PROVIDERS,
   defaultFirebase,
   FirebaseAuth} from 'angularfire2';
+import { ConnectivityService } from './providers/connectivity-service/connectivity-service';
 
 import { LoginPage } from './pages/login/login';
 import { ChatPage } from './pages/chat/chat';
 import { DashboardPage } from './pages/dashboard/dashboard';
 import { SedesPage } from './pages/sedes/sedes';
 import { MapaPage } from './pages/mapa/mapa';
-import { ConnectivityService } from './providers/connectivity-service/connectivity-service';
+import { IntroPage } from './pages/intro/intro';
 
 @Component({
   templateUrl: 'build/app.html'
@@ -37,7 +38,8 @@ class MyApp {
       { title: 'Dashboard', component: DashboardPage, icon: 'ionic' },
       { title: 'Sedes', component: SedesPage, icon: 'list-box' },
       { title: 'Mapa', component: MapaPage, icon: 'pin' },
-      { title: 'Chat', component: ChatPage, icon: 'ios-chatbubbles-outline' }
+      { title: 'Chat', component: ChatPage, icon: 'ios-chatbubbles-outline' },
+      { title: 'Intro', component: IntroPage, icon: 'book' }
     ];
   }
 
@@ -63,5 +65,5 @@ ionicBootstrap(MyApp, [FIREBASE_PROVIDERS,
     databaseURL: "https://amap-945a3.firebaseio.com",
     storageBucket: "amap-945a3.appspot.com",
   }), ConnectivityService], {
-    mode: 'ios'
+    mode: 'md'
   });

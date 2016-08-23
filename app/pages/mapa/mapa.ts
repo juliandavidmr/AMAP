@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { ConnectivityService } from '../../providers/connectivity-service/connectivity-service';
 import { Geolocation } from 'ionic-native';
 
@@ -16,8 +16,20 @@ export class MapaPage {
   apiKey: any;
   loader: any;
 
-  constructor(private nav: NavController, private connectivityService: ConnectivityService, private loadingCtrl: LoadingController) {
+  private markerUser: any;
+
+  constructor(
+    private nav: NavController,
+    private connectivityService: ConnectivityService,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController) {
     this.showLoading('Cargando mapa...');
+
+    if (connectivityService.isOffline()) {
+      this.loader.dismiss();
+      this.presentAlert('Sin conexión', 'Ups! Parece que no tienes conexión a internet.');
+    }
+
     this.loadGoogleMaps();
   }
 
@@ -37,7 +49,7 @@ export class MapaPage {
         window['mapInit'] = () => {
           this.initMap();
           this.enableMap();
-        }
+        };
 
         let script = document.createElement("script");
         script.id = "googleMaps";
@@ -52,7 +64,6 @@ export class MapaPage {
 
       }
     } else {
-
       if (this.connectivityService.isOnline()) {
         console.log("showing map");
         this.initMap();
@@ -62,12 +73,17 @@ export class MapaPage {
         this.disableMap();
         this.loader.dismiss();
       }
-
     }
 
   }
 
   initMap() {
+    let position_udla = {
+      coords: {
+        latitude: 1.619601,
+        longitude: -75.604045
+      }
+    };
 
     this.mapInitialised = true;
 
@@ -79,12 +95,48 @@ export class MapaPage {
         center: latLng,
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
+      };
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
+      this.markerUser = this.addMarker('Mi posicion', position.coords.latitude, position.coords.longitude);
+      console.log('Marker User: ', this.markerUser);
+
+    }).catch(err => {
+      console.log('No se pudo obtener posicion.');
+
+      let latLng = new google.maps.LatLng(position_udla.coords.latitude, position_udla.coords.longitude);
+
+      let mapOptions = {
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    }).then(_ => {
+      this.addMarker('Universidad de la Amazonia', position_udla.coords.latitude, position_udla.coords.longitude);
     });
 
+  }
+
+  addMarker(title: string = 'Marker', lat: number, lng: number) {
+    var marker = new google.maps.Marker({
+      position: { lat: lat, lng: lng },
+      map: this.map,
+      title: 'Universidad de la Amazonia!'
+    });
+
+    var infowindow = new google.maps.InfoWindow({
+      content: title,
+      maxWidth: 200
+    });
+
+    marker.addListener('click', function () {
+      infowindow.open(this.map, marker);
+    });
+
+    return marker;
   }
 
   disableMap() {
@@ -99,7 +151,7 @@ export class MapaPage {
   addConnectivityListeners() {
     var onOnline = () => {
       setTimeout(() => {
-        if (typeof google == "undefined" || typeof google.maps == "undefined") {
+        if (typeof google === "undefined" || typeof google.maps === "undefined") {
           this.loadGoogleMaps();
         } else {
           if (!this.mapInitialised) {
@@ -117,7 +169,6 @@ export class MapaPage {
 
     document.addEventListener('online', onOnline, false);
     document.addEventListener('offline', onOffline, false);
-
   }
 
   showLoading(msg) {
@@ -127,4 +178,14 @@ export class MapaPage {
 
     this.loader.present();
   }
+
+  presentAlert(title: string, description: string) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: description,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
 }

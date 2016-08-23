@@ -22,9 +22,11 @@ export class DashboardPage {
     private connectivityService: ConnectivityService,
     private alertCtrl: AlertController
   ) {
-    if (this.connectivityService.isOnline()) {
-      this.showLoading();
+    this.showLoading();
+  }
 
+  onPageDidEnter() {
+    if (this.connectivityService.isOnline()) {
       this.af.database.list('/recursosfisicos', {
         query: {
           limitToLast: 100,
@@ -34,17 +36,25 @@ export class DashboardPage {
         this.ListRecursosFisicos = list;
         this.ListRecursosFisicos_aux = list;
         // console.log(this.ListRecursosFisicos);
-        this.loader.dismiss();
+        try {
+          this.loader.dismiss();
+        } catch (error) {
+          console.log('ERROR Dismiss', error);
+        }
       });
     } else {
       this.presentAlert('Ups!', 'Al parecer tienes conexión a Internet.');
     }
   }
 
+  selectMap(item: any) {
+
+  }
 
   showLoading() {
     this.loader = this.loadingCtrl.create({
-      content: 'Actualizando base de datos...'
+      content: 'Actualizando base de datos...',
+      dismissOnPageChange: true
     });
 
     this.loader.present();

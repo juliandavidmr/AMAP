@@ -24,24 +24,33 @@ export class DetallePage {
     private alertCtrl: AlertController
   ) {
     this.showLoading('Calculando telemetría... \nNota: Debes tener activado el GPS para ésta funcionalidad.');
+  }
 
+  onPageDidEnter() {
     this.punto = this._navParams.data.posicion;
     console.log(this._navParams.data);
     this.detalle = this._navParams.data;
 
     Geolocation.getCurrentPosition().then(pos => {
+      this.loader.dismiss();
+
+      console.log('lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
+      this.posicion = pos.coords;
+
+      this.distancia = this.calcPosition(this.punto);
+      this.direccion = this.getBearing(this.punto.x, this.punto.y, this.posicion.latitude, this.posicion.longitude);
+      this.velocidad = pos.coords.speed;
+      this.altitud = pos.coords.altitude;
+
       this.subscription = Geolocation.watchPosition().subscribe(pos => {
         // console.log('=>', pos);
-
-        console.log('lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
+        console.log('Subs: lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
         this.posicion = pos.coords;
 
         this.distancia = this.calcPosition(this.punto);
         this.direccion = this.getBearing(this.punto.x, this.punto.y, this.posicion.latitude, this.posicion.longitude);
         this.velocidad = pos.coords.speed;
         this.altitud = pos.coords.altitude;
-
-        this.loader.dismiss();
       });
     }).catch((error) => {
       this.loader.dismiss();
@@ -77,6 +86,11 @@ export class DetallePage {
     return distance * 1000;
   }
 
+  /**
+   * Radio Ecuatorial 6,378.1 km
+   * Radio Polar 6,356.8 km
+   * Radio Medio 6,371.0 km
+   */
   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     var R = 6371;
     var dLat = (lat2 - lat1) * (Math.PI / 180);

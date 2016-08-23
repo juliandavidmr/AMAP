@@ -9,14 +9,14 @@
 <ion-content padding>
   <center>
     <div>
-      <p>Distancia actual</p>
+      <p>Distancia actual (Aprox.)</p>
       <h1>{{distancia | number: '.3-3'}}
       metros
     </h1>
       <h5>{{(distancia / 1000) | number: '.3-3'}}
       Km</h5>
     </div>
-    <span>{{direccion | number}}</span>
+    <span *ngIf="direccion" >{{direccion | number}} °</span>
   </center>
 
   <ion-list>
@@ -24,8 +24,8 @@
       Detalle
     </ion-list-header>
     <ion-item>{{detalle.descripcion}}</ion-item>
-    <ion-item *ngIf="detalle.numbloque != 0">Bloque {{detalle.numbloque}}</ion-item>
-    <ion-item *ngIf="detalle.numpiso != 0">Piso #{{detalle.numpiso}}</ion-item>
+    <ion-item *ngIf="detalle.numbloque !== 0">Bloque {{detalle.numbloque}}</ion-item>
+    <ion-item *ngIf="detalle.numpiso !== 0">Piso #{{detalle.numpiso}}</ion-item>
     <ion-item>Tipo {{detalle.tiporecurso}}</ion-item>
 
     <ion-list-header>
