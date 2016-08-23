@@ -1,28 +1,30 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar primary>
     <button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-title>login</ion-title>
+    <ion-title>Login</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
-  <ion-item>
-    <ion-label floating>Email</ion-label>
-    <ion-input type="email" name="email" [(ngModel)]="user.email"></ion-input>
-  </ion-item>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="email" name="email" [(ngModel)]="user.email"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label floating>Password</ion-label>
-    <ion-input type="password" name="password" [(ngModel)]="user.password"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" name="password" [(ngModel)]="user.password"></ion-input>
+    </ion-item>
 
-  <div padding>
-    <button block (click)="login(l)">Login</button>
-    <button block (click)="registerUser()">Create New Account</button>
-  </div>
+    <div padding>
+      <button block (click)="login(l)">Login</button>
+      <button block secondary (click)="registerUser()">Crear nueva cuenta</button>
+    </div>
+  </ion-list>
 </ion-content>

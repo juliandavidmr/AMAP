@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ionicBootstrap, Platform, Nav } from 'ionic-angular';
+import { ionicBootstrap, Platform, Nav, Storage, LocalStorage } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
 import {FIREBASE_PROVIDERS,
@@ -13,6 +13,7 @@ import { DashboardPage } from './pages/dashboard/dashboard';
 import { SedesPage } from './pages/sedes/sedes';
 import { MapaPage } from './pages/mapa/mapa';
 import { IntroPage } from './pages/intro/intro';
+import { AcercadePage } from './pages/acercade/acercade';
 
 @Component({
   templateUrl: 'build/app.html'
@@ -21,15 +22,26 @@ class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = DashboardPage;
+  local: any = new Storage(LocalStorage)
 
   pages: Array<{ title: string, component: any, icon: string }>;
 
   constructor(public platform: Platform, public auth: FirebaseAuth) {
-    this.auth.subscribe((data) => {
+    this.local.get('introShown').then((result) => {
+      console.log('Result: ', result);
+      if (result) {
+        this.rootPage = DashboardPage;
+      } else {
+        this.local.set('introShown', true);
+        this.rootPage = IntroPage;
+      }
+    });
+
+    /*this.auth.subscribe((data) => {
       if (data) {
         this.rootPage = DashboardPage;
       }
-    });
+    });*/
 
     this.initializeApp();
 
@@ -39,7 +51,9 @@ class MyApp {
       { title: 'Sedes', component: SedesPage, icon: 'list-box' },
       { title: 'Mapa', component: MapaPage, icon: 'pin' },
       { title: 'Chat', component: ChatPage, icon: 'ios-chatbubbles-outline' },
-      { title: 'Intro', component: IntroPage, icon: 'book' }
+      { title: 'Intro', component: IntroPage, icon: 'book' },
+      { title: 'Login', component: LoginPage, icon: 'ios-log-in-outline' },
+      { title: 'Acerca de', component: AcercadePage, icon: 'information' }
     ];
   }
 
