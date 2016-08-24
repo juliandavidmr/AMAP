@@ -28,8 +28,8 @@ export class LoginPage {
       });
 
       let prompt = this.alertCtrl.create({
-        title: "Completado",
-        subTitle: "Tu cuenta ha sido creada!",
+        title: 'Completado',
+        subTitle: 'Tu cuenta ha sido creada!',
         buttons: ['OK']
       });
       prompt.present();
@@ -46,7 +46,8 @@ export class LoginPage {
       method: AuthMethods.Password
     }).then((authData) => {
       this.loader.dismiss();
-      this.navCtrl.setRoot(DashboardPage);
+      this.navCtrl.push(DashboardPage);
+      // this.navCtrl.pop();
     }).catch((error) => {
       this.showError(error);
     });
