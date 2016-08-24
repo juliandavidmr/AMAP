@@ -46,7 +46,8 @@ export class LoginPage {
       method: AuthMethods.Password
     }).then((authData) => {
       this.loader.dismiss();
-      this.navCtrl.setRoot(DashboardPage);
+      this.navCtrl.push(DashboardPage);
+      // this.navCtrl.pop();
     }).catch((error) => {
       this.showError(error);
     });

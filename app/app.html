@@ -1,11 +1,9 @@
 <ion-menu [content]="content">
-
-  <ion-toolbar primary>
-    <ion-title>Menu</ion-title>
-  </ion-toolbar>
-
   <ion-content>
     <ion-list>
+      <button ion-item primary>
+        Menu
+      </button>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon [name]="p.icon" item-left large energized></ion-icon>
         {{p.title}}

@@ -8,9 +8,10 @@
     <ion-title>Dashboard</ion-title>
   </ion-navbar>
 
-  <ion-toolbar no-border-top no-border-bottom primary>
-    <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="getItems($event)" placeholder="Buscar por nombre, descripción..." class="ios"></ion-searchbar>
-  </ion-toolbar>
+  <ion-searchbar no-border-top no-border-bottom primary [(ngModel)]="searchQuery" (ionInput)="getItems($event)" placeholder="Buscar por nombre, descripción..." class="ios"></ion-searchbar>
+<!--  <ion-toolbar no-border-top no-border-bottom primary>
+
+  </ion-toolbar>-->
 </ion-header>
 
 <ion-content padding>
