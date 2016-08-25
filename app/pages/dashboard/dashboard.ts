@@ -4,6 +4,7 @@ import { FirebaseAuth, AngularFire } from 'angularfire2';
 import { ConnectivityService } from '../../providers/connectivity-service/connectivity-service';
 
 import { DetallePage } from '../detalle/detalle';
+import { MapaPage } from '../mapa/mapa';
 
 @Component({
   templateUrl: 'build/pages/dashboard/dashboard.html',
@@ -48,7 +49,7 @@ export class DashboardPage {
   }
 
   selectMap(item: any) {
-
+    this.navCtrl.push(MapaPage, { unidad: item });
   }
 
   showLoading() {

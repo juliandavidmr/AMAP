@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { ConnectivityService } from '../../providers/connectivity-service/connectivity-service';
 import { Geolocation } from 'ionic-native';
 
@@ -15,6 +15,8 @@ export class MapaPage {
   mapInitialised: boolean = false;
   apiKey: any;
   loader: any;
+  unidad: any; // Informacion de un recurso fisico seleccionado
+  title: string = 'Mapa';
 
   private markerUser: any;
 
@@ -22,7 +24,11 @@ export class MapaPage {
     private nav: NavController,
     private connectivityService: ConnectivityService,
     private alertCtrl: AlertController,
+    private _navParams: NavParams,
     private loadingCtrl: LoadingController) {
+    this.unidad = this._navParams.data.unidad;
+    console.log('=>', this.unidad);
+
     this.showLoading('Cargando mapa...');
 
     if (connectivityService.isOffline()) {
@@ -61,7 +67,7 @@ export class MapaPage {
         }
 
         document.body.appendChild(script);
-
+        this.loader.dismiss();
       }
     } else {
       if (this.connectivityService.isOnline()) {
@@ -116,6 +122,11 @@ export class MapaPage {
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
     }).then(_ => {
       this.addMarker('Universidad de la Amazonia', position_udla.coords.latitude, position_udla.coords.longitude);
+
+      if (this.unidad) {
+        this.addMarker(this.unidad.nombrerecurso, this.unidad.posicion.x, this.unidad.posicion.y);
+        this.title = this.unidad.nombrerecurso;
+      }
     });
 
   }
