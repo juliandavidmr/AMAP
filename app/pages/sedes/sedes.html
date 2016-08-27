@@ -11,14 +11,14 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngFor="let item of ListSedes | async">
+  <ion-card *ngFor="let item of ListSedes | async" (click)="openMap(item)">
 
     <ion-card-header>
       {{item.nombresede}}
     </ion-card-header>
 
     <ion-card-content>
-      Distancia actual {{calcPosition(item.posicion) | number: '.3-3'}} Km
+      Distancia actual {{(calcPosition(item.posicion) / 1000) | number: '.3-3'}} Km
     </ion-card-content>
 
   </ion-card>

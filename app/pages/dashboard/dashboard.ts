@@ -26,6 +26,10 @@ export class DashboardPage {
     this.showLoading();
   }
 
+  // Called when this page is popped from the nav stack
+  onPageWillUnload() {
+  }
+
   onPageDidEnter() {
     if (this.connectivityService.isOnline()) {
       this.af.database.list('/recursosfisicos', {

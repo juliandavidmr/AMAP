@@ -18,7 +18,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content #content padding>
   <ion-list>
     <ion-item *ngFor="let item of messages | async" (click)="presentActionSheet(item)">
       <ion-avatar item-left>
@@ -32,7 +32,7 @@
       </ion-avatar>
 
       <h2>{{item.content}}</h2>
-      <p>{{item.date}}</p>
+      <p *ngIf="item.date">{{moment(item.date).fromNow()}}</p>
       <p *ngIf="item.user">{{item.user}}</p>
 
       <ion-badge item-right primary *ngIf="item.megusta">{{item.megusta}}</ion-badge>

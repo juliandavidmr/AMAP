@@ -16,6 +16,7 @@ export class MapaPage {
   apiKey: any;
   loader: any;
   unidad: any; // Informacion de un recurso fisico seleccionado
+  sede: any; // Informacion de una sede seleccionada
   title: string = 'Mapa';
 
   private markerUser: any;
@@ -26,8 +27,12 @@ export class MapaPage {
     private alertCtrl: AlertController,
     private _navParams: NavParams,
     private loadingCtrl: LoadingController) {
+
     this.unidad = this._navParams.data.unidad;
-    console.log('=>', this.unidad);
+    this.sede = this._navParams.data.sede;
+
+    console.log('Unidad=>', this.unidad);
+    console.log('Sede  =>', this.sede);
 
     this.showLoading('Cargando mapa...');
 
@@ -40,7 +45,6 @@ export class MapaPage {
   }
 
   loadGoogleMaps() {
-
     this.addConnectivityListeners();
 
     if (typeof google === "undefined" || typeof google.maps === "undefined") {
@@ -97,15 +101,25 @@ export class MapaPage {
 
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-      let mapOptions = {
-        center: latLng,
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
+      let mapOptions = {};
+      if (this.sede) {
+        latLng = new google.maps.LatLng(this.sede.posicion.x, this.sede.posicion.y);
+        mapOptions = {
+          center: latLng,
+          zoom: 14,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+      } else {
+        mapOptions = {
+          center: latLng,
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+      }
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-      this.markerUser = this.addMarker('Mi posicion', position.coords.latitude, position.coords.longitude);
+      this.markerUser = this.addMarker('Mi posicion', position.coords.latitude, position.coords.longitude, 'user');
       console.log('Marker User: ', this.markerUser);
 
     }).catch(err => {
@@ -113,29 +127,45 @@ export class MapaPage {
 
       let latLng = new google.maps.LatLng(position_udla.coords.latitude, position_udla.coords.longitude);
 
-      let mapOptions = {
-        center: latLng,
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
+      let mapOptions = {};
+      if (this.sede) {
+        latLng = new google.maps.LatLng(this.sede.posicion.x, this.sede.posicion.y);
+        mapOptions = {
+          center: latLng,
+          zoom: 14,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+      } else {
+        mapOptions = {
+          center: latLng,
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+      }
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
     }).then(_ => {
-      this.addMarker('Universidad de la Amazonia', position_udla.coords.latitude, position_udla.coords.longitude);
+      this.addMarker('Universidad de la Amazonia', position_udla.coords.latitude, position_udla.coords.longitude, 'udla');
 
       if (this.unidad) {
-        this.addMarker(this.unidad.nombrerecurso, this.unidad.posicion.x, this.unidad.posicion.y);
+        this.addMarker(this.unidad.nombrerecurso, this.unidad.posicion.x, this.unidad.posicion.y, 'pin');
         this.title = this.unidad.nombrerecurso;
+      }
+
+      if (this.sede) {
+        this.addMarker(this.sede.nombresede, this.sede.posicion.x, this.sede.posicion.y, 'pin');
+        this.title = this.sede.nombresede;
       }
     });
 
   }
 
-  addMarker(title: string = 'Marker', lat: number, lng: number) {
+  addMarker(title: string = 'Marker', lat: number, lng: number, icon: string = 'pin') {
     var marker = new google.maps.Marker({
       position: { lat: lat, lng: lng },
       map: this.map,
-      title: 'Universidad de la Amazonia!'
+      title: title,
+      icon: this.getUrlIcon(icon)
     });
 
     var infowindow = new google.maps.InfoWindow({
@@ -148,6 +178,19 @@ export class MapaPage {
     });
 
     return marker;
+  }
+
+  private getUrlIcon(name: string) {
+    switch (name) {
+      case 'pin':
+        return 'images/icons/pin.png';
+      case 'udla':
+        return 'images/icons/udla.png';
+      case 'user':
+        return 'images/icons/user.png';
+      default:
+        return 'images/icons/pin.png';
+    }
   }
 
   disableMap() {

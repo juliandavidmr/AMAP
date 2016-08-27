@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
-import { FirebaseAuth, AuthProviders, AuthMethods, FirebaseRef, AngularFire, FirebaseListObservable } from 'angularfire2';
+import { FirebaseAuth, AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Geolocation } from 'ionic-native';
 
-import { DetallePage } from "../detalle/detalle";
+import { DetallePage } from '../detalle/detalle';
+import { MapaPage } from '../mapa/mapa';
 
 @Component({
   templateUrl: 'build/pages/sedes/sedes.html',
@@ -23,7 +24,6 @@ export class SedesPage {
     public navCtrl: NavController,
     private loadingCtrl: LoadingController) {
     this.showLoading();
-
 
     this.subscription = Geolocation.watchPosition().subscribe(pos => {
       console.log('lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
@@ -64,19 +64,19 @@ export class SedesPage {
   calcPosition(punto = { x: '', y: '' }) {
     if (this.posicion) {
 
-      let lat = punto.y;
-      let lng = punto.x;
+      let lat = punto.x;
+      let lng = punto.y;
 
       let distance = this.getDistanceFromLatLonInKm(lat, lng, this.posicion.latitude, this.posicion.longitude);
 
-      return distance;
+      return distance * 1000;
     } else {
       return 0;
     }
   }
 
   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-    var R = 6371;
+    var R = 6378.137;
     var dLat = (lat2 - lat1) * (Math.PI / 180);
     var dLon = (lon2 - lon1) * (Math.PI / 180);
     var a =
@@ -84,7 +84,6 @@ export class SedesPage {
       Math.cos(lat1 * (Math.PI / 180)) *
       Math.cos(lat2 * (Math.PI / 180)) *
       Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c;
     return d;
@@ -94,4 +93,7 @@ export class SedesPage {
     this.navCtrl.push(DetallePage, params);
   }
 
+  openMap(item: any) {
+    this.navCtrl.push(MapaPage, { sede: item });
+  }
 }

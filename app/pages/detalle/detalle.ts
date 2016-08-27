@@ -92,7 +92,7 @@ export class DetallePage {
    * Radio Medio 6,371.0 km
    */
   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-    var R = 6371;
+    var R = 6378.137;
     var dLat = (lat2 - lat1) * (Math.PI / 180);
     var dLon = (lon2 - lon1) * (Math.PI / 180);
     var a =

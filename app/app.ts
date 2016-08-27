@@ -50,7 +50,7 @@ class MyApp {
       { title: 'Dashboard', component: DashboardPage, icon: 'ionic' },
       { title: 'Sedes', component: SedesPage, icon: 'list-box' },
       { title: 'Mapa', component: MapaPage, icon: 'pin' },
-      { title: 'Chat', component: ChatPage, icon: 'ios-chatbubbles-outline' },
+      { title: 'Foro Chat', component: ChatPage, icon: 'ios-chatbubbles-outline' },
       { title: 'Intro', component: IntroPage, icon: 'book' },
       { title: 'Login', component: LoginPage, icon: 'ios-log-in-outline' },
       { title: 'Acerca de', component: AcercadePage, icon: 'information' }

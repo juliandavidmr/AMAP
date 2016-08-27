@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
-import { NavController, AlertController, ActionSheetController, LoadingController, ToastController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, AlertController, ActionSheetController, LoadingController, ToastController, Content } from 'ionic-angular';
 import { FirebaseAuth, AngularFire, FirebaseListObservable } from 'angularfire2';
+import * as momentjs from 'moment';
+import 'moment/locale/es';
+import 'rxjs/add/operator/map';
 
 import { LoginPage } from '../login/login';
 
@@ -8,11 +11,13 @@ import { LoginPage } from '../login/login';
   templateUrl: 'build/pages/chat/chat.html',
 })
 export class ChatPage {
+  @ViewChild(Content) content: Content;
 
   private autenticado: boolean = false;
   private dataUser: any;
   private messages: FirebaseListObservable<any>;
   private loader: any;
+  private moment: any = momentjs;
 
   constructor(
     private navCtrl: NavController,
@@ -22,12 +27,18 @@ export class ChatPage {
     private loadingCtrl: LoadingController,
     private toastController: ToastController,
     public af: AngularFire) {
-
+    this.moment.locale('es');
+    console.log('=>', this.moment().format(new Date().toDateString()));
   }
 
   onPageDidEnter() {
     this.messages = this.af.database.list('/chat');
-    console.log(this.messages);
+
+    /* this.messages.do(snapshots => {
+      snapshots.forEach(snapshot => console.log(snapshot));
+    })
+    .subscribe(snapshots => console.log(snapshots.length));
+    */
 
     this.auth.subscribe((data) => {
       if (data) {
@@ -38,6 +49,11 @@ export class ChatPage {
         this.autenticado = false;
       }
     });
+
+    // this.content.scrollToBottom(300); // 300ms animation speed
+    // this.content.scrollTo(0, 500, 200);
+    let dimensions = this.content.getContentDimensions();
+    this.content.scrollTo(0, dimensions.scrollBottom, 0);
   }
 
   register() {
