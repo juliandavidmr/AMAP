@@ -7,9 +7,13 @@ import 'rxjs/add/operator/map';
 
 import { LoginPage } from '../login/login';
 import { ChatDetallePage } from '../chat-detalle/chat-detalle';
+import { ConnectivityService } from '../../providers/connectivity-service/connectivity-service';
 
 @Component({
   templateUrl: 'build/pages/chat/chat.html',
+  providers: [
+    [ConnectivityService]
+  ]
 })
 export class ChatPage {
   @ViewChild(Content) content: Content;
@@ -20,6 +24,8 @@ export class ChatPage {
   private loader: any;
   private moment: any = momentjs;
 
+  private online: boolean = false;
+
   constructor(
     private navCtrl: NavController,
     private alertCtrl: AlertController,
@@ -27,35 +33,42 @@ export class ChatPage {
     private actionSheetController: ActionSheetController,
     private loadingCtrl: LoadingController,
     private toastController: ToastController,
-    public af: AngularFire) {
+    public af: AngularFire,
+    private connectivityService: ConnectivityService) {
     this.moment.locale('es');
 
     // console.log('=>', this.moment().format(new Date().toDateString()));
   }
 
   ionViewLoaded() {
-    this.messages = this.af.database.list('/chat');
+    if (this.connectivityService.isOnline()) {
+      this.online = true;
 
-    /* this.messages.do(snapshots => {
-      snapshots.forEach(snapshot => console.log(snapshot));
-    })
-    .subscribe(snapshots => console.log(snapshots.length));
-    */
+      this.messages = this.af.database.list('/chat');
 
-    this.auth.subscribe((data) => {
-      if (data) {
-        this.dataUser = data;
-        this.autenticado = true;
-        console.log('Autenticado', data);
-      } else {
-        this.autenticado = false;
-      }
-    });
+      /* this.messages.do(snapshots => {
+        snapshots.forEach(snapshot => console.log(snapshot));
+      })
+      .subscribe(snapshots => console.log(snapshots.length));
+      */
 
-    // this.content.scrollToBottom(300); // 300ms animation speed
-    this.content.scrollTo(0, 500, 200);
-    /*let dimensions = this.content.getContentDimensions();
-    this.content.scrollTo(0, dimensions.scrollBottom, 0);*/
+      this.auth.subscribe((data) => {
+        if (data) {
+          this.dataUser = data;
+          this.autenticado = true;
+          console.log('Autenticado', data);
+        } else {
+          this.autenticado = false;
+        }
+      });
+
+      // this.content.scrollToBottom(300); // 300ms animation speed
+      this.content.scrollTo(0, 500, 200);
+      /*let dimensions = this.content.getContentDimensions();
+      this.content.scrollTo(0, dimensions.scrollBottom, 0);*/
+    } else {
+      this.presentToast('Ups! Al parecer no tienes conexión a Internet', 5000);
+    }
   }
 
   register() {
@@ -133,9 +146,9 @@ export class ChatPage {
     this.navCtrl.push(ChatDetallePage, item);
   }
 
-    /**
-  * Verifica si un mensaje ya ha sido marcado por un usuario (el logueado actualmente)
-  */
+  /**
+* Verifica si un mensaje ya ha sido marcado por un usuario (el logueado actualmente)
+*/
   hasEmail(users: any, email: string) {
     return new Promise((resolve, reject) => {
       console.log('Item=>', users);

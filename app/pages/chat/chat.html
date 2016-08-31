@@ -7,11 +7,7 @@
 
     <ion-title>Foro Chat</ion-title>
 
-    <ion-buttons end>
-      <button>
-        <ion-icon name="search"></ion-icon>
-
-      </button>
+    <ion-buttons end *ngIf="online == true">
       <button (click)="addMessage()">
         <ion-icon name="add"></ion-icon>
       </button>

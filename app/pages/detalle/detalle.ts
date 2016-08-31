@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, LoadingController, AlertController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
+
+import { ConnectivityService } from '../../providers/connectivity-service/connectivity-service';
 
 @Component({
   templateUrl: 'build/pages/detalle/detalle.html',
+  providers: [
+    [ConnectivityService]
+  ]
 })
 export class DetallePage {
 
@@ -21,9 +26,10 @@ export class DetallePage {
     private navCtrl: NavController,
     private _navParams: NavParams,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private connectivityService: ConnectivityService,
+    private toastController: ToastController
   ) {
-    this.showLoading('Calculando telemetría... \nNota: Debes tener activado el GPS para ésta funcionalidad.');
   }
 
   onPageDidEnter() {
@@ -31,32 +37,38 @@ export class DetallePage {
     console.log(this._navParams.data);
     this.detalle = this._navParams.data;
 
-    Geolocation.getCurrentPosition().then(pos => {
-      this.loader.dismiss();
+    if (this.connectivityService.isOnline()) {
+      this.showLoading('Calculando telemetría... \nNota: Debes tener activado el GPS para ésta funcionalidad.');
 
-      console.log('lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
-      this.posicion = pos.coords;
+      Geolocation.getCurrentPosition().then(pos => {
+        this.loader.dismiss();
 
-      this.distancia = this.calcPosition(this.punto);
-      this.direccion = this.getBearing(this.punto.x, this.punto.y, this.posicion.latitude, this.posicion.longitude);
-      this.velocidad = pos.coords.speed;
-      this.altitud = pos.coords.altitude;
-
-      this.subscription = Geolocation.watchPosition().subscribe(pos => {
-        // console.log('=>', pos);
-        console.log('Subs: lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
+        console.log('lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
         this.posicion = pos.coords;
 
         this.distancia = this.calcPosition(this.punto);
         this.direccion = this.getBearing(this.punto.x, this.punto.y, this.posicion.latitude, this.posicion.longitude);
         this.velocidad = pos.coords.speed;
         this.altitud = pos.coords.altitude;
+
+        this.subscription = Geolocation.watchPosition().subscribe(pos => {
+          // console.log('=>', pos);
+          console.log('Subs: lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
+          this.posicion = pos.coords;
+
+          this.distancia = this.calcPosition(this.punto);
+          this.direccion = this.getBearing(this.punto.x, this.punto.y, this.posicion.latitude, this.posicion.longitude);
+          this.velocidad = pos.coords.speed;
+          this.altitud = pos.coords.altitude;
+        });
+      }).catch((error) => {
+        this.loader.dismiss();
+        console.log('ERROR', error);
+        this.presentAlert();
       });
-    }).catch((error) => {
-      this.loader.dismiss();
-      console.log('ERROR', error);
-      this.presentAlert();
-    });
+    } else {
+      this.presentToast('Conectate a Internet para opciones de telemetria.', 4000);
+    }
   }
 
   ngOnDestroy() {
@@ -140,6 +152,15 @@ export class DetallePage {
       buttons: ['OK']
     });
     alert.present();
+  }
+
+
+  presentToast(msg: string, time: number) {
+    let toast = this.toastController.create({
+      message: msg,
+      duration: time
+    });
+    toast.present();
   }
 
 }

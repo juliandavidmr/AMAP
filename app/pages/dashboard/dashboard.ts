@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController, SqlStorage, Storage, LocalStorage } from 'ionic-angular';
+import { NavController, LoadingController, AlertController, Storage, LocalStorage } from 'ionic-angular';
 import { FirebaseAuth, AngularFire } from 'angularfire2';
 import { ConnectivityService } from '../../providers/connectivity-service/connectivity-service';
 
@@ -15,6 +15,8 @@ export class DashboardPage {
   ListRecursosFisicos_aux: any = [];
   loader: any;
   localStorage: any = new Storage(LocalStorage);
+
+  online: boolean = false;
 
   constructor(
     public af: AngularFire,
@@ -34,6 +36,8 @@ export class DashboardPage {
     this.showLoading();
 
     if (this.connectivityService.isOnline()) {
+      this.online = true;
+
       this.af.database.list('/recursosfisicos', {
         query: {
           limitToLast: 100,

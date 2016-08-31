@@ -28,7 +28,7 @@
         <p>{{item.descripcion}}</p>
       </ion-item>
 
-      <ion-item-options side="right">
+      <ion-item-options side="right" *ngIf="online == true" >
         <button primary (click)="selectMap(item)">
           <ion-icon ion-icon-star name="pin"></ion-icon>
           Mapa
