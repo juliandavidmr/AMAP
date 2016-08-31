@@ -6,6 +6,7 @@ import 'moment/locale/es';
 import 'rxjs/add/operator/map';
 
 import { LoginPage } from '../login/login';
+import { ChatDetallePage } from '../chat-detalle/chat-detalle';
 
 @Component({
   templateUrl: 'build/pages/chat/chat.html',
@@ -28,10 +29,11 @@ export class ChatPage {
     private toastController: ToastController,
     public af: AngularFire) {
     this.moment.locale('es');
-    console.log('=>', this.moment().format(new Date().toDateString()));
+
+    // console.log('=>', this.moment().format(new Date().toDateString()));
   }
 
-  onPageDidEnter() {
+  ionViewLoaded() {
     this.messages = this.af.database.list('/chat');
 
     /* this.messages.do(snapshots => {
@@ -51,9 +53,9 @@ export class ChatPage {
     });
 
     // this.content.scrollToBottom(300); // 300ms animation speed
-    // this.content.scrollTo(0, 500, 200);
-    let dimensions = this.content.getContentDimensions();
-    this.content.scrollTo(0, dimensions.scrollBottom, 0);
+    this.content.scrollTo(0, 500, 200);
+    /*let dimensions = this.content.getContentDimensions();
+    this.content.scrollTo(0, dimensions.scrollBottom, 0);*/
   }
 
   register() {
@@ -103,8 +105,14 @@ export class ChatPage {
               let newmsg = {
                 content: data.message,
                 date: new Date().toString(),
-                inadecuado: 0,
-                megusta: 0,
+                inadecuado: {
+                  count: 0,
+                  users: []
+                },
+                megusta: {
+                  count: 0,
+                  users: []
+                },
                 user: this.dataUser.auth.email
               };
 
@@ -121,46 +129,87 @@ export class ChatPage {
     }
   }
 
-  presentActionSheet(item) {
-    let actionSheet = this.actionSheetController.create({
-      title: 'Opciones',
-      buttons: [
-        {
-          text: 'Inadecuado',
-          role: 'destructive',
-          handler: () => {
-            console.log('Inadecuado clicked');
-            this.messages.update(item, { inadecuado: ++item.inadecuado });
-          }
-        }, {
-          text: 'Me gusta',
-          role: 'destructive',
-          handler: () => {
-            console.log('Me gusta clicked');
+  openDetalle(item: any) {
+    this.navCtrl.push(ChatDetallePage, item);
+  }
 
-            this.showLoading('Marcando como me gusta ' + item.content);
-            this.messages.update(item, { megusta: ++item.megusta, inadecuado: (item.inadecuado > 0 ? --item.inadecuado : 0) }).then(_ => {
-              this.loader.dismiss();
-            });
+    /**
+  * Verifica si un mensaje ya ha sido marcado por un usuario (el logueado actualmente)
+  */
+  hasEmail(users: any, email: string) {
+    return new Promise((resolve, reject) => {
+      console.log('Item=>', users);
+
+      if (users) {
+        users.forEach(element => {
+          if (element.user === email) {
+            console.log('====Comparing: ', element.user, this.dataUser.auth.email);
+            return reject(true);
           }
-        }, {
-          text: 'Ver todo',
-          handler: () => {
-            console.log('Archive clicked');
-            this.presentToast(item.content, 5000);
-            // this.presentAlert('Mensaje', item.content);
-          }
-        }, {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
+        });
+      }
+      return resolve(false);
     });
+  }
 
-    actionSheet.present();
+  meGusta(item: any) {
+    console.log('Me gusta clicked');
+
+    this.hasEmail(item.megusta.users, this.dataUser.auth.email).then(() => {
+      this.showLoading('Marcando como me gusta ' + item.content);
+
+      this.messages.update(item, {
+        megusta: {
+          count: ++item.megusta.count,
+          users: (() => {
+            if (item.megusta.users) {
+              item.megusta.users.push({
+                user: this.dataUser.auth.email,
+                date: new Date()
+              });
+              return item.megusta.users;
+            } else {
+              return [{
+                user: this.dataUser.auth.email,
+                date: new Date()
+              }];
+            }
+          })()
+        }
+      }).then(_ => {
+        this.loader.dismiss();
+      });
+    }).catch(_ => {
+      this.presentToast('Ya me gusta este mensaje.', 3000);
+    });
+  }
+
+  inadecuado(item: any) {
+    console.log('Inadecuado clicked');
+
+    this.hasEmail(item.inadecuado.users, this.dataUser.auth.email).then(() => {
+      this.messages.update(item, {
+        inadecuado: {
+          count: ++item.inadecuado.count,
+          users: (() => {
+            if (item.inadecuado.users) {
+              item.inadecuado.users.push({
+                user: this.dataUser.auth.email,
+                date: new Date()
+              });
+              return item.inadecuado.users;
+            } else {
+              return [{
+                user: this.dataUser.auth.email,
+                date: new Date()
+              }];
+            }
+          })()
+        }
+      });
+    }).catch(_ => {
+      this.presentToast('Ya lo has marcado como inadecuado.', 3000);
+    });
   }
 
   presentAlert(title: string, description: string) {

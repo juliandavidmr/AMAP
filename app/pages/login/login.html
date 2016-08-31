@@ -10,11 +10,7 @@
 
 </ion-header>
 
-<ion-content padding>
-  <br/>
-  <center>
-    <img src="images/LogoAMAP2.png" class="logoad">
-  </center>
+<ion-content #content padding>
   <ion-list>
     <ion-item>
       <ion-label floating>Email</ion-label>
@@ -27,8 +23,8 @@
     </ion-item>
 
     <div padding>
-      <button block (click)="login(l)">Login</button>
-      <button block secondary (click)="registerUser()">Crear nueva cuenta</button>
+      <button block (click)="login()">Login</button>
+      <button block secondary (click)="registerUser()">Crear cuenta</button>
     </div>
   </ion-list>
 </ion-content>

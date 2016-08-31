@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController, SqlStorage, Storage, LocalStorage } from 'ionic-angular';
 import { FirebaseAuth, AngularFire } from 'angularfire2';
 import { ConnectivityService } from '../../providers/connectivity-service/connectivity-service';
 
@@ -14,6 +14,7 @@ export class DashboardPage {
   ListRecursosFisicos: any = [];
   ListRecursosFisicos_aux: any = [];
   loader: any;
+  localStorage: any = new Storage(LocalStorage);
 
   constructor(
     public af: AngularFire,
@@ -23,14 +24,15 @@ export class DashboardPage {
     private connectivityService: ConnectivityService,
     private alertCtrl: AlertController
   ) {
-    this.showLoading();
   }
 
   // Called when this page is popped from the nav stack
   onPageWillUnload() {
   }
 
-  onPageDidEnter() {
+  onPageWillEnter() {
+    this.showLoading();
+
     if (this.connectivityService.isOnline()) {
       this.af.database.list('/recursosfisicos', {
         query: {
@@ -40,15 +42,26 @@ export class DashboardPage {
       }).subscribe(list => {
         this.ListRecursosFisicos = list;
         this.ListRecursosFisicos_aux = list;
+
+        this.localStorage.set('recursos', JSON.stringify(list));
         // console.log(this.ListRecursosFisicos);
-        try {
-          this.loader.dismiss();
-        } catch (error) {
-          console.log('ERROR Dismiss', error);
+      });
+
+      setTimeout(() => {
+        this.loader.dismiss();
+      }, 2000);
+    } else {
+      this.loader.dismiss();
+
+      this.localStorage.get('recursos').then((recusos_list) => {
+        let list = JSON.parse(recusos_list);
+        if (list) {
+          this.ListRecursosFisicos = list;
+          this.ListRecursosFisicos_aux = list;
+        } else {
+          this.presentAlert('Ups!', 'Al parecer tienes conexión a Internet.');
         }
       });
-    } else {
-      this.presentAlert('Ups!', 'Al parecer tienes conexión a Internet.');
     }
   }
 

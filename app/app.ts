@@ -79,5 +79,5 @@ ionicBootstrap(MyApp, [FIREBASE_PROVIDERS,
     databaseURL: "https://amap-945a3.firebaseio.com",
     storageBucket: "amap-945a3.appspot.com",
   }), ConnectivityService], {
-    mode: 'md'
+    mode: 'ios'
   });

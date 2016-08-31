@@ -1,0 +1,34 @@
+<ion-header class="opaque">
+
+  <ion-navbar primary no-border-bottom>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>{{detalle.content.substring(0, 15)}}...</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      <ion-badge item-right primary>{{moment(detalle.date).fromNow()}}</ion-badge>
+      {{detalle.user}}
+    </ion-card-header>
+    <ion-card-content>
+      {{detalle.content}}
+
+      <hr />
+
+      <ion-list *ngIf="detalle.megusta.users">
+        <ion-list-header>Le gusta a</ion-list-header>
+
+        <ion-item *ngFor="let item of detalle.megusta.users">
+          <h2>{{item.user}}</h2>
+          <ion-note item-right>{{moment(item.date).fromNow()}}</ion-note>
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

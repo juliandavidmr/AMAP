@@ -23,16 +23,22 @@ export class LoginPage {
     this.showLoading();
 
     this.auth.createUser(this.user).then((authdata) => {
-      setTimeout(() => {
-        this.loader.dismiss();
-      });
+      this.loader.dismiss();
 
-      let prompt = this.alertCtrl.create({
-        title: 'Completado',
+      let alert = this.alertCtrl.create({
+        title: 'Completado! :)',
         subTitle: 'Tu cuenta ha sido creada!',
-        buttons: ['OK']
+        buttons: [
+          {
+            text: 'Ok, Gracias',
+            handler: data => {
+              console.log('Cancel clicked');
+              this.navCtrl.pop();
+            }
+          }
+        ]
       });
-      prompt.present();
+      alert.present();
     }).catch((error) => {
       this.showError(error);
     });

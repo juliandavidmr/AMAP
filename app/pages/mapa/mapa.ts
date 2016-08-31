@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController, Storage, LocalStorage } from 'ionic-angular';
 import { ConnectivityService } from '../../providers/connectivity-service/connectivity-service';
 import { Geolocation } from 'ionic-native';
 
@@ -19,6 +19,8 @@ export class MapaPage {
   sede: any; // Informacion de una sede seleccionada
   title: string = 'Mapa';
 
+  localStorage: any = new Storage(LocalStorage);
+
   private markerUser: any;
 
   constructor(
@@ -27,7 +29,14 @@ export class MapaPage {
     private alertCtrl: AlertController,
     private _navParams: NavParams,
     private loadingCtrl: LoadingController) {
+  }
 
+  ionViewLoaded() {
+    console.log('In view loaded');
+    this.loadAll();
+  }
+
+  loadAll() {
     this.unidad = this._navParams.data.unidad;
     this.sede = this._navParams.data.sede;
 
@@ -36,7 +45,7 @@ export class MapaPage {
 
     this.showLoading('Cargando mapa...');
 
-    if (connectivityService.isOffline()) {
+    if (this.connectivityService.isOffline()) {
       this.loader.dismiss();
       this.presentAlert('Sin conexión', 'Ups! Parece que no tienes conexión a internet.');
     }
@@ -106,13 +115,13 @@ export class MapaPage {
         latLng = new google.maps.LatLng(this.sede.posicion.x, this.sede.posicion.y);
         mapOptions = {
           center: latLng,
-          zoom: 14,
+          zoom: 12,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
       } else {
         mapOptions = {
           center: latLng,
-          zoom: 15,
+          zoom: 16,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
       }
@@ -132,13 +141,13 @@ export class MapaPage {
         latLng = new google.maps.LatLng(this.sede.posicion.x, this.sede.posicion.y);
         mapOptions = {
           center: latLng,
-          zoom: 14,
+          zoom: 10,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
       } else {
         mapOptions = {
           center: latLng,
-          zoom: 15,
+          zoom: 16,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
       }
@@ -148,13 +157,20 @@ export class MapaPage {
       this.addMarker('Universidad de la Amazonia', position_udla.coords.latitude, position_udla.coords.longitude, 'udla');
 
       if (this.unidad) {
+        console.log('Add marker unidad.');
         this.addMarker(this.unidad.nombrerecurso, this.unidad.posicion.x, this.unidad.posicion.y, 'pin');
         this.title = this.unidad.nombrerecurso;
-      }
-
-      if (this.sede) {
+      } else if (this.sede) {
+        console.log('Add marker sede.');
         this.addMarker(this.sede.nombresede, this.sede.posicion.x, this.sede.posicion.y, 'pin');
         this.title = this.sede.nombresede;
+      } else { // Cargar todos los puntos del mapa si no se ha seleccionado unidad y sede
+        /*this.localStorage.get('recursos').then((recusos_list) => {
+          let aux = JSON.parse(recusos_list);
+          aux.map(item => {
+            this.addMarker(item.nombrerecurso, item.posicion.x, item.posicion.y, 'pin');
+          });
+        });*/
       }
     });
 

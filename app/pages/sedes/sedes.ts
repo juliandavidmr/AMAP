@@ -24,21 +24,35 @@ export class SedesPage {
     public navCtrl: NavController,
     private loadingCtrl: LoadingController) {
     this.showLoading();
-
-    this.subscription = Geolocation.watchPosition().subscribe(pos => {
-      console.log('lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
-      this.posicion = pos.coords;
-
-      //this.distancia = this.calcPosition(this.punto);
-    });
   }
 
   ngOnDestroy() {
     console.log('Subscription Droped');
-    this.subscription.unsubscribe();
+
+    try {
+      this.subscription.unsubscribe();
+      // this.auth.unsubscribe();
+    } catch (error) {
+    }
   }
 
   onPageDidEnter() {
+     Geolocation.getCurrentPosition().then(pos => {
+      this.loader.dismiss();
+
+      console.log('lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
+      this.posicion = pos.coords;
+
+      this.subscription = Geolocation.watchPosition().subscribe(pos => {
+        // console.log('=>', pos);
+        console.log('Subs: lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
+        this.posicion = pos.coords;
+      });
+    }).catch((error) => {
+      this.loader.dismiss();
+      console.log('ERROR', error);
+    });
+
     this.auth.subscribe((data) => {
       if (data) {
         //console.log(data);
@@ -55,10 +69,6 @@ export class SedesPage {
     });
 
     this.loader.present();
-  }
-
-  ngOnInit() {
-
   }
 
   calcPosition(punto = { x: '', y: '' }) {

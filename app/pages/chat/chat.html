@@ -10,6 +10,7 @@
     <ion-buttons end>
       <button>
         <ion-icon name="search"></ion-icon>
+
       </button>
       <button (click)="addMessage()">
         <ion-icon name="add"></ion-icon>
@@ -20,23 +21,35 @@
 
 <ion-content #content padding>
   <ion-list>
-    <ion-item *ngFor="let item of messages | async" (click)="presentActionSheet(item)">
-      <ion-avatar item-left>
-        <div class="container" *ngIf="item.user">
-          <div class="inner-circle">
-            <div class="icon-letter">
-              {{item.user.substring(0, 2).toUpperCase()}}
+    <ion-item-sliding *ngFor="let item of messages | async">
+      <ion-item (click)="openDetalle(item)">
+        <ion-avatar item-left>
+          <div class="container" *ngIf="item.user">
+            <div class="inner-circle">
+              <div class="icon-letter">
+                {{item.user.substring(0, 2).toUpperCase()}}
+              </div>
             </div>
           </div>
-        </div>
-      </ion-avatar>
+        </ion-avatar>
+        <h2>{{item.content}}</h2>
+        <p>{{item.user}}</p>
+        <p *ngIf="item.date">{{moment(item.date).fromNow()}}</p>
 
-      <h2>{{item.content}}</h2>
-      <p *ngIf="item.date">{{moment(item.date).fromNow()}}</p>
-      <p *ngIf="item.user">{{item.user}}</p>
+        <ion-badge item-right danger *ngIf="item.megusta.count > 0">{{item.megusta.count}}</ion-badge>
+        <ion-badge item-right favorite *ngIf="item.inadecuado.count > 0">{{item.inadecuado.count}}</ion-badge>
+      </ion-item>
 
-      <ion-badge item-right primary *ngIf="item.megusta">{{item.megusta}}</ion-badge>
-      <ion-badge item-right danger *ngIf="item.inadecuado">{{item.inadecuado}}</ion-badge>
-    </ion-item>
+      <ion-item-options side="right">
+        <button favorite (click)="inadecuado(item)">
+          <ion-icon name="bookmark"></ion-icon>
+          Inadecuado
+        </button>
+        <button danger (click)="meGusta(item)">
+          <ion-icon name="heart"></ion-icon>
+          Me gusta
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>
