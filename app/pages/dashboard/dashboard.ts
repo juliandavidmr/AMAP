@@ -26,6 +26,9 @@ export class DashboardPage {
     private connectivityService: ConnectivityService,
     private alertCtrl: AlertController
   ) {
+    if (this.connectivityService.isOnline()) {
+      this.showLoading();
+    }
   }
 
   // Called when this page is popped from the nav stack
@@ -33,9 +36,11 @@ export class DashboardPage {
   }
 
   onPageWillEnter() {
-    this.showLoading();
-
     if (this.connectivityService.isOnline()) {
+      setTimeout(() => {
+        this.loader.dismiss();
+      }, 2500);
+
       this.online = true;
 
       this.af.database.list('/recursosfisicos', {
@@ -50,10 +55,6 @@ export class DashboardPage {
         this.localStorage.set('recursos', JSON.stringify(list));
         // console.log(this.ListRecursosFisicos);
       });
-
-      setTimeout(() => {
-        this.loader.dismiss();
-      }, 2000);
     } else {
       this.loader.dismiss();
 

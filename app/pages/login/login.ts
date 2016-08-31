@@ -33,7 +33,7 @@ export class LoginPage {
             text: 'Ok, Gracias',
             handler: data => {
               console.log('Cancel clicked');
-              this.navCtrl.pop();
+              this.navCtrl.setRoot(DashboardPage);
             }
           }
         ]
@@ -52,9 +52,10 @@ export class LoginPage {
       method: AuthMethods.Password
     }).then((authData) => {
       this.loader.dismiss();
-      this.navCtrl.push(DashboardPage);
+      this.navCtrl.setRoot(DashboardPage);
       // this.navCtrl.pop();
     }).catch((error) => {
+      this.loader.dismiss();
       this.showError(error);
     });
   }
