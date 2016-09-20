@@ -21,10 +21,10 @@ $ ionic serve
 
 * Configure provider **/app/app.ts**
 ```json
-    apiKey: "AIzaSyCOi2TytLkoP4m0KAcygF8R1LgOL3LTG98", 
-    authDomain: "amap-945a3.firebaseapp.com",
-    databaseURL: "https://amap-945a3.firebaseio.com",
-    storageBucket: "amap-945a3.appspot.com",
+    apiKey: "xxxxxxxxxxxxxxxxxxxxx", 
+    authDomain: "xxxxxx.firebaseapp.com",
+    databaseURL: "https://xxxxxxx.firebaseio.com",
+    storageBucket: "xxxxxx.appspot.com",
 ```
 
 ## License
