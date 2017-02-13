@@ -1,0 +1,21 @@
+page-mapa {}
+
+.map {
+  scroll-content {
+    height: 100%
+  }
+  #map {
+    width: 100%;
+    height: 94%;
+    opacity: 0.9;
+    transition: opacity 150ms ease-in;
+    &.show-map {
+      opacity: 1;
+    }
+  }
+}
+
+[padding],
+[padding] scroll-content {
+  padding: 0px;
+}
