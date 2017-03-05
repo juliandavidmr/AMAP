@@ -15,10 +15,6 @@ import { SedesPage } from '../pages/sedes/sedes';
 /* Providers */
 import { ServiceRecursos } from '../providers/service-recursos';
 import { Load } from '../providers/load';
-import { DateMethod } from '../providers/date';
-
-/* Components */
-import { ParallaxHeader } from '../components/parallax-header/parallax-header';
 
 @NgModule({
   declarations: [
@@ -28,7 +24,6 @@ import { ParallaxHeader } from '../components/parallax-header/parallax-header';
     TabsPage,
     SalaDetallePage,
     SalasPage,
-    ParallaxHeader,
     MapaPage,
     SedesPage
   ],
@@ -59,8 +54,7 @@ import { ParallaxHeader } from '../components/parallax-header/parallax-header';
     useClass: IonicErrorHandler
   },
     ServiceRecursos,
-    Load,
-    DateMethod
+    Load
   ]
 })
 export class AppModule { }
