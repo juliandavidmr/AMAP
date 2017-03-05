@@ -1,0 +1,515 @@
+{
+  "bloques": [{
+    "descripcion": "Bloque 7",
+    "fk_idsede": 2,
+    "idbloque": 1,
+    "nombresede": "Sede Principal",
+    "numbloque": 7,
+    "posicion": {
+      "x": 1.62146,
+      "y": -75.604481
+    }
+  }, {
+    "descripcion": "Bloque 1",
+    "fk_idsede": 2,
+    "idbloque": 2,
+    "nombresede": "Sede Principal",
+    "numbloque": 1,
+    "posicion": {
+      "x": 1.620668,
+      "y": -75.604318
+    }
+  }, {
+    "descripcion": "Bloque Administrativo",
+    "fk_idsede": 2,
+    "idbloque": 3,
+    "nombresede": "Sede Principal",
+    "numbloque": 0,
+    "posicion": {
+      "x": 1.620677,
+      "y": -75.605018
+    }
+  }, {
+    "descripcion": "Bloque 2",
+    "fk_idsede": 2,
+    "idbloque": 4,
+    "nombresede": "Sede Principal",
+    "numbloque": 2,
+    "posicion": {
+      "x": 1.620877,
+      "y": -75.604204
+    }
+  }, {
+    "descripcion": "Bloque 3",
+    "fk_idsede": 2,
+    "idbloque": 5,
+    "nombresede": "Sede Principal",
+    "numbloque": 3,
+    "posicion": {
+      "x": 1.6210849016502,
+      "y": -75.6044271559687
+    }
+  }, {
+    "descripcion": "Bloque 4",
+    "fk_idsede": 2,
+    "idbloque": 6,
+    "nombresede": "Sede Principal",
+    "numbloque": 4,
+    "posicion": {
+      "x": 1.62120858584028,
+      "y": -75.6050011435629
+    }
+  }, {
+    "descripcion": "Bloque 5",
+    "fk_idsede": 2,
+    "idbloque": 7,
+    "nombresede": "Sede Principal",
+    "numbloque": 5,
+    "posicion": {
+      "x": 1.62127993106402,
+      "y": -75.6044990933605
+    }
+  }, {
+    "descripcion": "Bloque 6",
+    "fk_idsede": 2,
+    "idbloque": 8,
+    "nombresede": "Sede Principal",
+    "numbloque": 6,
+    "posicion": {
+      "x": 1.62141535733622,
+      "y": -75.6049835481887
+    }
+  }, {
+    "descripcion": "No corresponde",
+    "fk_idsede": 2,
+    "idbloque": 10,
+    "nombresede": "Sede Principal",
+    "numbloque": 0,
+    "posicion": {
+      "x": 1.62146,
+      "y": -75.604481
+    }
+  }],
+  "recursosfisicos": [{
+    "descripcion": "Sala 1 del bloque 7",
+    "fk_idbloque": 1,
+    "fk_idtiporecursofisico": 1,
+    "idrecursofisico": 1,
+    "nombrerecurso": "Sala 1",
+    "numbloque": 7,
+    "numpiso": 2,
+    "posicion": {
+      "x": 1.621446,
+      "y": -75.604745
+    },
+    "tiporecurso": "Sala"
+  }, {
+    "descripcion": "Centro del auditorio Angel Cuniberti",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 6,
+    "idrecursofisico": 4,
+    "nombrerecurso": "Auditorio Angel Cuniberti",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.61966021872002,
+      "y": -75.6042609436796
+    },
+    "tiporecurso": "Auditorio"
+  }, {
+    "descripcion": "Porton de la entrada superior",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 15,
+    "idrecursofisico": 5,
+    "nombrerecurso": "Entrada superior",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62188764079824,
+      "y": -75.6043158903639
+    },
+    "tiporecurso": "Entradas"
+  }, {
+    "descripcion": "Porton principal",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 15,
+    "idrecursofisico": 6,
+    "nombrerecurso": "Entrada principal",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62025987534145,
+      "y": -75.6052105107656
+    },
+    "tiporecurso": "Entradas"
+  }, {
+    "descripcion": "Lugar de mecanica",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 11,
+    "idrecursofisico": 7,
+    "nombrerecurso": "Laboratorio mecanica",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62161515030137,
+      "y": -75.6045162121625
+    },
+    "tiporecurso": "Laboratorio"
+  }, {
+    "descripcion": "Mecanica fina",
+    "fk_idbloque": 1,
+    "fk_idtiporecursofisico": 11,
+    "idrecursofisico": 8,
+    "nombrerecurso": "Laboratorio mecanica fina",
+    "numbloque": 7,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62147945598957,
+      "y": -75.6047053198647
+    },
+    "tiporecurso": "Laboratorio"
+  }, {
+    "descripcion": "Laboratorio de investigaciones de giecom",
+    "fk_idbloque": 4,
+    "fk_idtiporecursofisico": 11,
+    "idrecursofisico": 9,
+    "nombrerecurso": "Laboratorio de GIECOM",
+    "numbloque": 2,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62086071604281,
+      "y": -75.6039104847783
+    },
+    "tiporecurso": "Laboratorio"
+  }, {
+    "descripcion": "Camara de vigilancia, entrada superior",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 9,
+    "idrecursofisico": 10,
+    "nombrerecurso": "Camara de vigilancia",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62182259913647,
+      "y": -75.6044678577049
+    },
+    "tiporecurso": "Camara"
+  }, {
+    "descripcion": "Fisica y matematica",
+    "fk_idbloque": 8,
+    "fk_idtiporecursofisico": 11,
+    "idrecursofisico": 11,
+    "nombrerecurso": "Laboratorio de fisica y matematica",
+    "numbloque": 6,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62141269318953,
+      "y": -75.6050123290896
+    },
+    "tiporecurso": "Laboratorio"
+  }, {
+    "descripcion": "Campo ",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 10,
+    "idrecursofisico": 12,
+    "nombrerecurso": "Campo de futbol",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62037887781686,
+      "y": -75.6037046364591
+    },
+    "tiporecurso": "Recreacion"
+  }, {
+    "descripcion": "Cancha ",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 10,
+    "idrecursofisico": 13,
+    "nombrerecurso": "Cancha de micro futbol",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.61984768018139,
+      "y": -75.6036370704069
+    },
+    "tiporecurso": "Recreacion"
+  }, {
+    "descripcion": "Deportes ",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 10,
+    "idrecursofisico": 14,
+    "nombrerecurso": "Concha Acustica",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.61988685133342,
+      "y": -75.6046765002707
+    },
+    "tiporecurso": "Recreacion"
+  }, {
+    "descripcion": "Cafeteria...",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 8,
+    "idrecursofisico": 15,
+    "nombrerecurso": "Cafeteria 1",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62075804145455,
+      "y": -75.6050907972776
+    },
+    "tiporecurso": "Cafeteria"
+  }, {
+    "descripcion": "Caf. Salida de la Biblioteca",
+    "fk_idbloque": 2,
+    "fk_idtiporecursofisico": 8,
+    "idrecursofisico": 16,
+    "nombrerecurso": "Cafeteria de Biblioteca",
+    "numbloque": 1,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62062161913193,
+      "y": -75.604540201702
+    },
+    "tiporecurso": "Cafeteria"
+  }, {
+    "descripcion": "Caf. Che",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 8,
+    "idrecursofisico": 17,
+    "nombrerecurso": "Cafeteria el CHE",
+    "numbloque": 0,
+    "numpiso": 2,
+    "posicion": {
+      "x": 1.62062161913193,
+      "y": -75.604213448635
+    },
+    "tiporecurso": "Cafeteria"
+  }, {
+    "descripcion": "Edificio de sala de profesores",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 1,
+    "idrecursofisico": 18,
+    "nombrerecurso": "Salas de docentes",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62129806222857,
+      "y": -75.6053691015011
+    },
+    "tiporecurso": "Sala"
+  }, {
+    "descripcion": "Ingles",
+    "fk_idbloque": 6,
+    "fk_idtiporecursofisico": 1,
+    "idrecursofisico": 19,
+    "nombrerecurso": "Salas de ingles",
+    "numbloque": 4,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62116553809709,
+      "y": -75.6053076982738
+    },
+    "tiporecurso": "Sala"
+  }, {
+    "descripcion": "3105",
+    "fk_idbloque": 5,
+    "fk_idtiporecursofisico": 1,
+    "idrecursofisico": 20,
+    "nombrerecurso": "Salas Carlos Muñoz",
+    "numbloque": 3,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62108663193823,
+      "y": -75.6045325200924
+    },
+    "tiporecurso": "Sala"
+  }, {
+    "descripcion": " Sala",
+    "fk_idbloque": 5,
+    "fk_idtiporecursofisico": 1,
+    "idrecursofisico": 21,
+    "nombrerecurso": "Sala Caquetá",
+    "numbloque": 3,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62108798264195,
+      "y": -75.6046898290316
+    },
+    "tiporecurso": "Sala"
+  }, {
+    "descripcion": "Parqueadero cerca al auditorio ang. Cuniberti",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 14,
+    "idrecursofisico": 22,
+    "nombrerecurso": "Parqueadero auditorio",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.61985571194881,
+      "y": -75.6041264161499
+    },
+    "tiporecurso": "Parqueadero"
+  }, {
+    "descripcion": "Parqueadero cerca al bloque 7",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 14,
+    "idrecursofisico": 23,
+    "nombrerecurso": "Parqueadero entrada superior",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62168041493727,
+      "y": -75.6047322913874
+    },
+    "tiporecurso": "Parqueadero"
+  }, {
+    "descripcion": "Parqueadero cerca a la entrada principal ",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 14,
+    "idrecursofisico": 24,
+    "nombrerecurso": "Parqueadero principal",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62027722257734,
+      "y": -75.6049066065596
+    },
+    "tiporecurso": "Parqueadero"
+  }, {
+    "descripcion": "Parqueadero cerca al bloque 4",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 14,
+    "idrecursofisico": 25,
+    "nombrerecurso": "Parqueadero central",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62105031270933,
+      "y": -75.6050803975949
+    },
+    "tiporecurso": "Parqueadero"
+  }, {
+    "descripcion": "Parqueadero cerca al bloque Administrativo",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 14,
+    "idrecursofisico": 26,
+    "nombrerecurso": "Parqueadero de administracion",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62051772261377,
+      "y": -75.6049474701694
+    },
+    "tiporecurso": "Parqueadero"
+  }, {
+    "descripcion": " ",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 5,
+    "idrecursofisico": 27,
+    "nombrerecurso": "Biblioteca principal",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62038098606544,
+      "y": -75.6044017456928
+    },
+    "tiporecurso": "Biblioteca"
+  }, {
+    "descripcion": " Fotocopiadora",
+    "fk_idbloque": 10,
+    "fk_idtiporecursofisico": 13,
+    "idrecursofisico": 28,
+    "nombrerecurso": "Papeleria1",
+    "numbloque": 0,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62080549198148,
+      "y": -75.6051080210439
+    },
+    "tiporecurso": "Papeleria"
+  }, {
+    "descripcion": " ",
+    "fk_idbloque": 4,
+    "fk_idtiporecursofisico": 13,
+    "idrecursofisico": 29,
+    "nombrerecurso": "Fotocopiadora la manigua",
+    "numbloque": 2,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.6208747444785,
+      "y": -75.6046671677248
+    },
+    "tiporecurso": "Papeleria"
+  }, {
+    "descripcion": " ",
+    "fk_idbloque": 4,
+    "fk_idtiporecursofisico": 13,
+    "idrecursofisico": 30,
+    "nombrerecurso": "Fotocopiadora Alpha & Omega",
+    "numbloque": 2,
+    "numpiso": 1,
+    "posicion": {
+      "x": 1.62087706358789,
+      "y": -75.6047003820951
+    },
+    "tiporecurso": "Papeleria"
+  }],
+  "sedes": [{
+    "direccion": "Carrera #3, Florencia, Caquetá, Colombia",
+    "idsede": 2,
+    "nombresede": "Sede Principal",
+    "posicion": {
+      "x": 1.619885,
+      "y": -75.603902
+    }
+  }, {
+    "idsede": 3,
+    "nombresede": "Sede Centro",
+    "posicion": {
+      "x": 1.605944,
+      "y": -75.607444
+    }
+  }, {
+    "idsede": 4,
+    "nombresede": "Granja Experimental Santo Domingo",
+    "posicion": {
+      "x": 1.585333,
+      "y": -75.641583
+    }
+  }, {
+    "idsede": 5,
+    "nombresede": "Sede Social",
+    "posicion": {
+      "x": 1.603111,
+      "y": -75.650528
+    }
+  }, {
+    "nombresede": "Centro de Investigaciones Macagual",
+    "posicion": {
+      "x": 1.501336,
+      "y": -75.663089
+    }
+  }],
+  "tiporecurso": [{
+    "descripcion": "Auditorio"
+  }, {
+    "descripcion": "Biblioteca"
+  }, {
+    "descripcion": "Cafeteria"
+  }, {
+    "descripcion": "Camara"
+  }, {
+    "descripcion": "Entradas"
+  }, {
+    "descripcion": "Laboratorio"
+  }, {
+    "descripcion": "Papeleria"
+  }, {
+    "descripcion": "Parqueadero"
+  }, {
+    "descripcion": "Recreacion"
+  }, {
+    "descripcion": "Sala"
+  }]
+}

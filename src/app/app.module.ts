@@ -1,61 +1,63 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+
 import { MyApp } from './app.component';
 
-import { Page1 } from '../pages/page1/page1';
-import { Page2 } from '../pages/page2/page2';
-import { AcercadePage } from '../pages/acercade/acercade';
-import { ChatPage } from '../pages/chat/chat';
-import { ChatDetallePage } from '../pages/chat-detalle/chat-detalle';
-import { DashboardPage } from '../pages/dashboard/dashboard';
-import { DetallePage } from '../pages/detalle/detalle';
-import { IntroPage } from '../pages/intro/intro';
-import { LoginPage } from '../pages/login/login';
+/* Pages */
+import { AboutPage } from '../pages/about/about';
+import { HomePage } from '../pages/home/home';
+import { TabsPage } from '../pages/tabs/tabs';
+import { SalaDetallePage } from '../pages/sala-detalle/sala-detalle';
+import { SalasPage } from '../pages/salas/salas';
 import { MapaPage } from '../pages/mapa/mapa';
-import { SedesPage } from '../pages/sedes/sedes';
 
-import { Connect } from '../providers/connect';
-import { Coord } from '../providers/coord';
+/* Providers */
+import { ServiceRecursos } from '../providers/service-recursos';
+import { Load } from '../providers/load';
+import { DateMethod } from '../providers/date';
+
+/* Components */
+import { ParallaxHeader } from '../components/parallax-header/parallax-header';
 
 @NgModule({
   declarations: [
     MyApp,
-    Page1,
-    Page2,
-    AcercadePage,
-    ChatPage,
-    ChatDetallePage,
-    DashboardPage,
-    DetallePage,
-    IntroPage,
-    LoginPage,
-    MapaPage,
-    SedesPage
+    AboutPage,
+    HomePage,
+    TabsPage,
+    SalaDetallePage,
+    SalasPage,
+    ParallaxHeader,
+    MapaPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+      backButtonText: 'Atras',
+      iconMode: 'md',
+      modalEnter: 'modal-slide-in',
+      modalLeave: 'modal-slide-out',
+      tabsPlacement: 'top',
+      pageTransition: 'ios'
+    }, {}
+    )
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    Page1,
-    Page2,
-    AcercadePage,
-    ChatPage,
-    ChatDetallePage,
-    DashboardPage,
-    DetallePage,
-    IntroPage,
-    LoginPage,
-    MapaPage,
-    SedesPage
+    AboutPage,
+    HomePage,
+    TabsPage,
+    SalaDetallePage,
+    SalasPage,
+    MapaPage
   ],
-  providers: [
-    {
-      provide: ErrorHandler, useClass: IonicErrorHandler
-    },
-    Connect,
-    Coord
+  providers: [{
+    provide: ErrorHandler,
+    useClass: IonicErrorHandler
+  },
+    ServiceRecursos,
+    Load,
+    DateMethod
   ]
 })
-export class AppModule {}
+export class AppModule { }
