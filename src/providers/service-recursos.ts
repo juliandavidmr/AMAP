@@ -1,22 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+
 import data from './data.json';
-
-/*
-  Generated class for the ServiceSalas provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
-interface Recursos {
-  descripcion: string
-  nombrerecurso: string
-  numbloque: Number
-  numpiso: Number
-  posicion: { x: Number, y: Number }
-  tiporecurso: string
-}
+import { Sedes } from '../interfaces/SedeInterface';
+import { Recursos } from '../interfaces/RecursoInterface';
 
 @Injectable()
 export class ServiceRecursos {
@@ -27,6 +15,10 @@ export class ServiceRecursos {
 
   getListRecursos(): Recursos[] {
     return data.recursosfisicos as Recursos[];
+  }
+
+  getListSedes(): Sedes[] {
+    return data.sedes as Sedes[];
   }
 
 }

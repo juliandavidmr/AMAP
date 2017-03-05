@@ -23,9 +23,18 @@
   </ion-searchbar>
 
   <ion-list no-border>
-    <ion-item *ngFor="let item of list_salas" (click)="openDetalleEstacion(item)">
+    <ion-item *ngFor="let item of list_salas" (click)="openDetalle(item)">
       <ion-avatar item-left>
-        <img src="assets/images/reuniones.jpg">
+        <img *ngIf="item.tiporecurso == 'Sala'" src="assets/images/reuniones.jpg">
+        <img *ngIf="item.tiporecurso == 'Auditorio'" src="assets/images/auditorio.png">
+        <img *ngIf="item.tiporecurso == 'Entradas'" src="assets/images/puerta.png">
+        <img *ngIf="item.tiporecurso == 'Laboratorio'" src="assets/images/lab.png">
+        <img *ngIf="item.tiporecurso == 'Camara'" src="assets/images/cam.png">
+        <img *ngIf="item.tiporecurso == 'Recreacion'" src="assets/images/fut.png">
+        <img *ngIf="item.tiporecurso == 'Cafeteria'" src="assets/images/taza.png">
+        <img *ngIf="item.tiporecurso == 'Parqueadero'" src="assets/images/parqueadero.png">        
+        <img *ngIf="item.tiporecurso == 'Biblioteca'" src="assets/images/library.png">       
+        <img *ngIf="item.tiporecurso == 'Papeleria'" src="assets/images/papeleria.png">               
       </ion-avatar>
       <h2>{{ item.nombrerecurso }}</h2>
       <p>{{ item.descripcion }}</p>

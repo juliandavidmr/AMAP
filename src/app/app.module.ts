@@ -10,6 +10,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SalaDetallePage } from '../pages/sala-detalle/sala-detalle';
 import { SalasPage } from '../pages/salas/salas';
 import { MapaPage } from '../pages/mapa/mapa';
+import { SedesPage } from '../pages/sedes/sedes';
 
 /* Providers */
 import { ServiceRecursos } from '../providers/service-recursos';
@@ -28,7 +29,8 @@ import { ParallaxHeader } from '../components/parallax-header/parallax-header';
     SalaDetallePage,
     SalasPage,
     ParallaxHeader,
-    MapaPage
+    MapaPage,
+    SedesPage
   ],
   imports: [
     IonicModule.forRoot(MyApp, {
@@ -49,7 +51,8 @@ import { ParallaxHeader } from '../components/parallax-header/parallax-header';
     TabsPage,
     SalaDetallePage,
     SalasPage,
-    MapaPage
+    MapaPage,
+    SedesPage
   ],
   providers: [{
     provide: ErrorHandler,

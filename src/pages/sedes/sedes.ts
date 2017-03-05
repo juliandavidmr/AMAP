@@ -1,24 +1,20 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { SalaDetallePage } from '../sala-detalle/sala-detalle';
+import { MapaPage } from '../mapa/mapa';
 
 import { ServiceRecursos } from '../../providers/service-recursos';
 import { Load } from '../../providers/load';
 
-/*
-  Generated class for the Estaciones page.
+import { Sedes } from '../../interfaces/SedeInterface';
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
-  selector: 'page-salas',
-  templateUrl: 'salas.html'
+  selector: 'page-sedes',
+  templateUrl: 'sedes.html'
 })
-export class SalasPage {
+export class SedesPage {
 
-  public list_salas: any = [];
+  public list_sedes: Sedes[];
   public search: string = '';
 
   constructor(
@@ -31,7 +27,7 @@ export class SalasPage {
   }
 
   initializeItems() {
-    this.list_salas = this.recursos.getListRecursos();
+    this.list_sedes = this.recursos.getListSedes();
   }
 
   ionViewDidLoad() {
@@ -39,7 +35,7 @@ export class SalasPage {
   }
 
   openDetalle(estacion_params: any) {
-    this.navCtrl.push(SalaDetallePage, estacion_params);
+    this.navCtrl.push(MapaPage, estacion_params);
   }
 
   onInput(event: any) {
@@ -51,8 +47,8 @@ export class SalasPage {
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
-      this.list_salas = this.list_salas.filter((item) => {
-        return (item.nombrerecurso.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      this.list_sedes = this.list_sedes.filter((item) => {
+        return (item.nombresede.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
   }
