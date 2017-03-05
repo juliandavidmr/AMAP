@@ -13,10 +13,16 @@ export class ServiceRecursos {
     console.log('Hello ServiceSalas Provider', data);
   }
 
+  /**
+   * Listado de Recursos
+   */
   getListRecursos(): Recursos[] {
     return data.recursosfisicos as Recursos[];
   }
 
+  /**
+   * Listado de Sedes
+   */
   getListSedes(): Sedes[] {
     return data.sedes as Sedes[];
   }

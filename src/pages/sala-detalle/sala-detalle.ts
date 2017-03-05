@@ -1,31 +1,32 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-/*
-  Generated class for the EstacioneDetalle page.
+import { Recursos } from '../../interfaces/RecursoInterface';
+import { MapaPage } from '../mapa/mapa';
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-sala-detalle',
   templateUrl: 'sala-detalle.html'
 })
 export class SalaDetallePage {
 
-  public detalle: any = [];
+  public detalle: Recursos;
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams
   ) {
-     this.detalle = this.navParams.data;    
+    this.detalle = this.navParams.data;
 
-     console.log(this.detalle); 
+    console.log(this.detalle);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EstacioneDetallePage');
+  }
+
+  openMapa() {
+    this.navCtrl.push(MapaPage, this.detalle)
   }
 
 }
