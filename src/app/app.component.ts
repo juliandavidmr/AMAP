@@ -19,7 +19,7 @@ export class MyApp {
       Splashscreen.hide();
 
       StatusBar.overlaysWebView(true); // let status bar overlay webview
-      StatusBar.backgroundColorByHexString('#ffffff'); // set status bar to white
+      StatusBar.backgroundColorByHexString('#f4f4f4'); // set status bar to white
     });
   }
 }

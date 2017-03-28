@@ -1,44 +1,26 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { ServiceRecursos } from '../../providers/service-recursos';
 import L from 'leaflet';
 
-import { Recursos } from '../../interfaces/RecursoInterface';
-import { ServiceRecursos } from '../../providers/service-recursos';
-
-/*
-  Generated class for the Mapa page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-mapa',
   templateUrl: 'mapa.html'
 })
 export class MapaPage {
 
-  map: any;
+  map: any = {};
   center: Array<Number> = [
-    1.6208841, -75.6051835
+    1.620281, -75.604768
   ]
-  zoom: Number = 18;
+  zoom: Number = 17;
 
-  greenIcon = L.icon({
-    iconUrl: 'assets/images/pin2.png',
-
-    iconSize: [43, 45], // size of the icon
-    shadowSize: [50, 64], // size of the shadow
-    iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-    shadowAnchor: [4, 62],  // the same for the shadow
-    popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-  });
-  seleccion: Recursos; // Almacena la informacion de un recurso seleccionado previamente
+  public list_recursos = [];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public recursos: ServiceRecursos
-  ) {
+    public recursos: ServiceRecursos) {
   }
 
   ionViewDidLoad() {
@@ -49,48 +31,92 @@ export class MapaPage {
   ngAfterViewInit() {
     this.loadMap();
 
-    if (this.navParams.data.posicion != undefined) { // Se ha seleccionado un recurso 
-      console.log(this.navParams.data)
+    this.loadRecursos();
+  }
 
-      this.seleccion = this.navParams.data;
-      let coord = [this.seleccion.posicion.x, this.seleccion.posicion.y]
-
-      this.addMarker(coord, this.seleccion.nombrerecurso)
-    } else {
-      let rcs_list = this.recursos.getListRecursos() as Recursos[];
-      rcs_list.map(item => {
-        this.addMarker([item.posicion.x, item.posicion.y], item.nombrerecurso);
-      })
+  toIcon(tiporecurso: string): string {
+    switch (tiporecurso) {
+      case 'Sala': return 'assets/images/reuniones.jpg';
+      case 'Auditorio': return 'assets/images/auditorio.png';
+      case 'Entradas': return 'assets/images/puerta.png';
+      case 'Laboratorio': return 'assets/images/lab.png';
+      case 'Camara': return 'assets/images/cam.png';
+      case 'Recreacion': return 'assets/images/fut.png';
+      case 'Cafeteria': return 'assets/images/taza.png';
+      case 'Parqueadero': return 'assets/images/parqueadero.png';
+      case 'Biblioteca': return 'assets/images/library.png';
+      case 'Papeleria': return 'assets/images/papeleria.png';
+      default: return 'assets/images/reuniones.jpg';
     }
   }
 
   /**
-   * Carga el mapa
+   * Carga las estacioens en el mapa
    */
-  loadMap() {
-    if (this.map == undefined) {
-      this.map.remove();
-      this.map = L.map('map').setView(this.center, this.zoom);
-      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(this.map);
-
-      L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images/';
-
-      this.map.on('click', (e) => {
-        let marker = L.marker(e.latlng)
-          .bindPopup('Mensaje')
-          .addTo(this.map)
-          .openPopup();
-      });
-
-      this.addMarker([1.6221243, -75.5961411], 'Florencia, Caquetá');
-    }
+  loadRecursos() {
+    this.recursos.getListRecursos().map((item, index) => {
+      const html_content = `
+        ${item.nombrerecurso} <br/>
+        <ul>
+          <li>${(item.descripcion == "" && !!item.descripcion)? 'No asignado' : item.descripcion}</li>
+          <li>Bloque ${item.numbloque <= 0 ? 'no asignado' : item.numbloque}</li>
+          <li>Piso ${item.numpiso}</li>
+          <li>Tipo ${item.tiporecurso}</li>
+        </ul>
+      `;
+      this.addMarker([
+        item.posicion.x,
+        item.posicion.y],
+        html_content,
+        this.toIcon(item.tiporecurso)
+      );
+    })
   }
 
-  addMarker(coord: Array<Number>, message: string = 'Mensaje') {
+  /**
+   * Carga el elemento del mapa
+   */
+  loadMap() {
+    this.map = L.map('map').setView(this.center, this.zoom);
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">SAT Florencia</a> GIECOM'
+    }).addTo(this.map);
+
+    L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images/';
+
+    // Detecta cuando se hace click en el mapa
+    this.map.on('click', (e) => {
+      /*
+      //marker Default
+      let marker = L.marker(e.latlng)
+        .bindPopup('Mensaje')
+        .addTo(this.map)
+        .openPopup();
+      */
+    });
+
+    // Marcador por defecto
+    // this.addMarker(this.center, 'Florencia, Caquetá');
+  }
+
+  /**
+   * Añade un marcador al mapa
+   * @param coord Coordenadas
+   * @param message Mensaje a mostrar en popup
+   */
+  addMarker(coord: Array<Number | String>, message: string = 'Mensaje', icon?: string): void {
+    // Configuracion del mapa
+    var greenIcon = L.icon({
+      iconUrl: icon || 'assets/images/pin2.png',
+      iconSize: [25, 30], // size of the icon
+      shadowSize: [50, 64], // size of the shadow
+      iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+      shadowAnchor: [4, 62],  // the same for the shadow
+      popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
     // L.marker([50.5, 30.5]).addTo(this.map);
-    L.marker(coord, { icon: this.greenIcon }).addTo(this.map)
+    L.marker(coord, { icon: greenIcon }).addTo(this.map)
       .bindPopup(message)
       .openPopup();
   }

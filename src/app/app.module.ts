@@ -5,7 +5,6 @@ import { MyApp } from './app.component';
 
 /* Pages */
 import { AboutPage } from '../pages/about/about';
-import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SalaDetallePage } from '../pages/sala-detalle/sala-detalle';
 import { SalasPage } from '../pages/salas/salas';
@@ -16,11 +15,12 @@ import { SedesPage } from '../pages/sedes/sedes';
 import { ServiceRecursos } from '../providers/service-recursos';
 import { Load } from '../providers/load';
 
+import { Geolocation } from '@ionic-native/geolocation';
+
 @NgModule({
   declarations: [
     MyApp,
     AboutPage,
-    HomePage,
     TabsPage,
     SalaDetallePage,
     SalasPage,
@@ -33,7 +33,7 @@ import { Load } from '../providers/load';
       iconMode: 'md',
       modalEnter: 'modal-slide-in',
       modalLeave: 'modal-slide-out',
-      tabsPlacement: 'top',
+      tabsPlacement: 'botom',
       pageTransition: 'ios'
     }, {}
     )
@@ -42,7 +42,6 @@ import { Load } from '../providers/load';
   entryComponents: [
     MyApp,
     AboutPage,
-    HomePage,
     TabsPage,
     SalaDetallePage,
     SalasPage,
@@ -53,6 +52,7 @@ import { Load } from '../providers/load';
     provide: ErrorHandler,
     useClass: IonicErrorHandler
   },
+    Geolocation,
     ServiceRecursos,
     Load
   ]

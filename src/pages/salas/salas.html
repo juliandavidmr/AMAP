@@ -1,11 +1,3 @@
-<ion-header>
-
-  <ion-navbar color="primary">
-    <ion-title>Recursos fisicos</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
 <ion-content padding no-margin class="list-avatar-page">
   <ion-searchbar
     [(ngModel)]="search"
@@ -34,6 +26,8 @@
       <p>{{ item.descripcion }}</p>
       <ion-note *ngIf="item.numbloque != 0" item-right>Bloque {{ item.numbloque }}</ion-note>
     </ion-item>
+    <ion-item></ion-item>
+    <ion-item></ion-item>
 
   </ion-list>
 </ion-content>
